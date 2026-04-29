@@ -20,7 +20,7 @@ function getEnv(name, fallback = "") {
 
 function getProviderConfig() {
   return {
-    gemini: { apiKey: getEnv("GEMINI_API_KEY"), model: getEnv("GEMINI_MODEL", "gemini-3-flash-preview") },
+    gemini: { apiKey: getEnv("GEMINI_API_KEY"), model: getEnv("GEMINI_MODEL", "gemini-2.0-flash") },
     groq: { apiKey: getEnv("GROQ_API_KEY"), model: getEnv("GROQ_MODEL", "llama-3.3-70b-versatile") },
     mistral: { apiKey: getEnv("MISTRAL_API_KEY"), model: getEnv("MISTRAL_MODEL", "mistral-small-latest") },
     cohere: { apiKey: getEnv("COHERE_API_KEY"), model: getEnv("COHERE_MODEL", "command-r") },
