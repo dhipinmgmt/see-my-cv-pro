@@ -1,0 +1,10 @@
+{
+  "name": "see-my-cv",
+  "version": "1.0.0",
+  "description": "Aplikasi web review CV menggunakan AI — static + serverless, multi-model fallback, zero persistence.",
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  },
+  "license": "MIT"
+}
