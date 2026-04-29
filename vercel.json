@@ -3,7 +3,6 @@
   "outputDirectory": "public",
   "functions": {
     "api/review.js": {
-      "runtime": "nodejs20.x",
       "maxDuration": 60
     }
   },
