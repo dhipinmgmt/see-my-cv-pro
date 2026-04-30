@@ -141,9 +141,20 @@ async function requestCVReview({ extractedText, fileMetadata, careerContext }) {
     const payload = await safeReadJSON(response);
 
     if (!response.ok) {
-      throw new APIError(payload?.message || payload?.error || "Review CV belum bisa diproses.", {
+      // Safely extract a string message — handles our server errors, plain string codes,
+      // AND Vercel's own runtime error shape: { error: { message: "...", code: "..." } }
+      const rawMsg =
+        (typeof payload?.message === "string" && payload.message.trim()) ? payload.message
+        : (typeof payload?.error === "string" && payload.error.trim()) ? payload.error
+        : (typeof payload?.error?.message === "string" && payload.error.message.trim()) ? payload.error.message
+        : null;
+      const rawCode =
+        payload?.code
+        || (typeof payload?.error?.code === "string" ? payload.error.code : null)
+        || `HTTP_${response.status}`;
+      throw new APIError(rawMsg || "Review CV belum bisa diproses.", {
         status: response.status,
-        code: payload?.code || `HTTP_${response.status}`,
+        code: rawCode,
         details: payload?.details || null,
       });
     }
