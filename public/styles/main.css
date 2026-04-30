@@ -378,11 +378,14 @@ select:focus-visible {
   position: fixed;
   inset: 0;
   z-index: 999;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   min-height: 100vh;
-  padding: 2rem 1.2rem;
-  overflow: auto;
-  place-items: start center;
+  padding: 2.5rem 1.2rem 3rem;
+  overflow-x: hidden;
+  overflow-y: auto;
   background:
     radial-gradient(circle at 18% 14%, rgba(14, 165, 233, 0.25), transparent 24rem),
     radial-gradient(circle at 82% 16%, rgba(37, 99, 235, 0.18), transparent 28rem),
@@ -2243,10 +2246,11 @@ select:focus-visible {
 
 .consent-panel--legal {
   width: min(100%, 860px);
-  display: grid;
-  grid-template-rows: auto auto auto auto auto auto auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
   padding: clamp(1.15rem, 3vw, 2rem);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .consent-panel--legal h1 {
@@ -2498,7 +2502,6 @@ select:focus-visible {
 @media (max-width: 860px) {
   .consent-panel--legal {
     width: min(100%, 760px);
-    max-height: 94vh;
     padding: 1rem;
   }
 
@@ -2523,7 +2526,6 @@ select:focus-visible {
   }
 
   .consent-panel--legal {
-    max-height: 96vh;
     border-radius: var(--radius-lg);
   }
 
@@ -2605,11 +2607,13 @@ select:focus-visible {
 
 .legal-expand-wrapper {
   position: relative;
-  margin-bottom: 1rem;
+  width: 100%;
+  flex-shrink: 0;
+  margin-bottom: 0.5rem;
 }
 
 .legal-consent-box--collapsed {
-  max-height: 220px;
+  max-height: 200px;
   overflow: hidden;
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
