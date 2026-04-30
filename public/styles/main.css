@@ -378,13 +378,16 @@ select:focus-visible {
   position: fixed;
   inset: 0;
   z-index: 999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  padding: 2.5rem 1.2rem 3rem;
-  overflow: auto;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  padding: clamp(0.75rem, 2.5vw, 2rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background:
     radial-gradient(circle at 18% 14%, rgba(14, 165, 233, 0.25), transparent 24rem),
     radial-gradient(circle at 82% 16%, rgba(37, 99, 235, 0.18), transparent 28rem),
@@ -2245,18 +2248,22 @@ select:focus-visible {
 
 .consent-panel--legal {
   width: min(100%, 860px);
-  flex-shrink: 0;
+  max-height: calc(100dvh - 1.5rem);
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: clamp(1.15rem, 3vw, 2rem);
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  overflow: hidden;
+  border-radius: clamp(1.25rem, 4vw, 2rem);
 }
 
 .consent-panel--legal h1 {
   max-width: 760px;
   margin-bottom: 0.75rem;
-  font-size: clamp(1.9rem, 5vw, 3.5rem);
-  line-height: 0.98;
-  letter-spacing: -0.075em;
+  font-size: clamp(1.65rem, 7vw, 3.1rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
 }
 
 .consent-panel--legal .consent-lead {
@@ -2277,9 +2284,9 @@ select:focus-visible {
 
 .consent-summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
 }
 
 .consent-summary-grid article {
@@ -2342,11 +2349,13 @@ select:focus-visible {
 /* ---------- Legal Document Box ---------- */
 
 .legal-consent-box {
-  min-height: unset;
-  max-height: unset;
-  padding: 1rem;
+  min-height: 150px;
+  max-height: min(34dvh, 260px);
+  padding: 0.95rem;
   margin-bottom: 1rem;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 251, 255, 0.92)),
     #ffffff;
@@ -2513,33 +2522,51 @@ select:focus-visible {
   }
 
   .legal-consent-box {
-    max-height: 35vh;
-    min-height: 160px;
+    max-height: min(35dvh, 240px);
+    min-height: 140px;
   }
 }
 
 @media (max-width: 560px) {
   .consent-gate {
-    padding: 0.55rem;
+    place-items: start center;
+    padding: 0.75rem;
   }
 
   .consent-panel--legal {
+    width: 100%;
+    max-height: calc(100dvh - 1.5rem);
+    padding: 0.95rem;
     border-radius: var(--radius-lg);
   }
 
+  .consent-panel--legal .brand-mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: 0.7rem;
+  }
+
   .consent-panel--legal h1 {
-    font-size: clamp(1.7rem, 11vw, 2.55rem);
-    letter-spacing: -0.06em;
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.55rem, 9vw, 2.35rem);
+    letter-spacing: -0.045em;
   }
 
   .consent-panel--legal .consent-lead {
-    font-size: 0.94rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
 
   .legal-consent-box {
-    max-height: 42vh;
+    max-height: min(28dvh, 220px);
+    min-height: 140px;
     padding: 0.85rem;
     border-radius: var(--radius-md);
+  }
+
+  .legal-consent-box--expanded {
+    max-height: min(36dvh, 280px);
   }
 
   .legal-section h2 {
@@ -2555,11 +2582,29 @@ select:focus-visible {
   .legal-section li {
     padding-right: 0.7rem;
   }
+
+  .consent-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .consent-summary-grid article {
+    padding: 0.75rem;
+  }
+
+  .consent-check--legal {
+    padding: 0.8rem;
+    margin-bottom: 0.65rem;
+  }
 }
 
 @media (max-height: 760px) {
+  .consent-gate {
+    place-items: start center;
+  }
+
   .consent-panel--legal {
-    max-height: 95vh;
+    max-height: calc(100dvh - 1rem);
   }
 
   .consent-panel--legal .brand-mark {
@@ -2577,12 +2622,26 @@ select:focus-visible {
   }
 
   .legal-consent-box {
-    max-height: 32vh;
+    max-height: min(32dvh, 220px);
     margin-bottom: 0.75rem;
+  }
+
+  .legal-consent-box--expanded {
+    max-height: min(42dvh, 340px);
   }
 
   .consent-check--legal {
     margin-bottom: 0.65rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .consent-panel--legal .brand-mark {
+    display: none;
+  }
+
+  .consent-summary-grid {
+    display: none;
   }
 }
 
@@ -2606,19 +2665,20 @@ select:focus-visible {
 .legal-expand-wrapper {
   position: relative;
   width: 100%;
-  flex-shrink: 0;
+  min-height: 0;
+  flex: 1 1 auto;
   margin-bottom: 0.5rem;
 }
 
 .legal-consent-box--collapsed {
-  max-height: 200px;
-  overflow: hidden;
+  max-height: min(30dvh, 220px);
+  overflow-y: auto;
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .legal-consent-box--expanded {
-  max-height: 9999px;
-  overflow: visible;
+  max-height: min(46dvh, 380px);
+  overflow-y: auto;
   transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2665,4 +2725,49 @@ select:focus-visible {
   max-width: 16px;
   flex-shrink: 0;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================================
+   Consent Form Responsive Fix — dvh fallback & button lock
+   ========================================================= */
+
+html,
+body {
+  width: 100%;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+@supports not (height: 100dvh) {
+  .consent-gate {
+    height: 100vh;
+    min-height: 100vh;
+  }
+
+  .consent-panel--legal {
+    max-height: calc(100vh - 1.5rem);
+  }
+
+  .legal-consent-box {
+    max-height: 260px;
+  }
+
+  .legal-consent-box--collapsed {
+    max-height: 200px;
+  }
+
+  .legal-consent-box--expanded {
+    max-height: 340px;
+  }
+}
+
+.legal-expand-btn,
+.consent-check--legal,
+.consent-panel--legal [data-consent-continue] {
+  flex: 0 0 auto;
+}
+
+.consent-panel--legal [data-consent-continue] {
+  width: 100%;
+  min-height: 48px;
 }
