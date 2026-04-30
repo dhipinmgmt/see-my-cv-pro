@@ -75,7 +75,8 @@
       </article>
     </div>
 
-    <div class="legal-consent-box" role="document" aria-label="Isi formulir persetujuan">
+    <div class="legal-expand-wrapper" id="legal-expand-wrapper">
+      <div class="legal-consent-box legal-consent-box--collapsed" id="legal-box" role="document" aria-label="Isi formulir persetujuan">
       <section class="legal-section">
         <h2>1. Tujuan Pemrosesan</h2>
         <p>
@@ -164,7 +165,22 @@
           sebelum mengunggah dokumen.
         </p>
       </section>
+      </div>
+      <div class="legal-fade" id="legal-fade" aria-hidden="true"></div>
     </div>
+
+    <button
+      class="legal-expand-btn"
+      id="legal-expand-btn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="legal-box"
+    >
+      <span id="legal-expand-label">Baca Selengkapnya</span>
+      <svg class="legal-expand-icon" id="legal-expand-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
 
     <label class="consent-check consent-check--legal">
       <input type="checkbox" data-consent-checkbox />
@@ -579,6 +595,36 @@
     <footer class="site-footer">
       <p>© 2026 Gusti I. Mahardhika. Hak cipta dilindungi.</p>
     </footer>
+
+    <script>
+      (function () {
+        var btn    = document.getElementById('legal-expand-btn');
+        var box    = document.getElementById('legal-box');
+        var fade   = document.getElementById('legal-fade');
+        var label  = document.getElementById('legal-expand-label');
+        var icon   = document.getElementById('legal-expand-icon');
+        if (!btn || !box) return;
+
+        btn.addEventListener('click', function () {
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          if (!expanded) {
+            box.classList.remove('legal-consent-box--collapsed');
+            box.classList.add('legal-consent-box--expanded');
+            fade.style.display = 'none';
+            btn.setAttribute('aria-expanded', 'true');
+            label.textContent = 'Sembunyikan';
+            icon.style.transform = 'rotate(180deg)';
+          } else {
+            box.classList.add('legal-consent-box--collapsed');
+            box.classList.remove('legal-consent-box--expanded');
+            fade.style.display = '';
+            btn.setAttribute('aria-expanded', 'false');
+            label.textContent = 'Baca Selengkapnya';
+            icon.style.transform = '';
+          }
+        });
+      })();
+    </script>
     <script type="module" src="/scripts/main.js"></script>
   </body>
 </html>
