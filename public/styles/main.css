@@ -2632,18 +2632,21 @@ select:focus-visible {
 }
 
 .legal-expand-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  width: fit-content;
   gap: 0.4rem;
-  padding: 0.55rem 1rem;
+  padding: 0.5rem 1.1rem;
   margin-bottom: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
+  line-height: 1;
   color: var(--primary-strong);
   cursor: pointer;
   background: var(--primary-lighter);
   border: 1px solid var(--line-blue);
   border-radius: var(--radius-full);
+  box-shadow: none;
   transition: background 0.15s, box-shadow 0.15s;
 }
 
@@ -2653,8 +2656,11 @@ select:focus-visible {
 }
 
 .legal-expand-icon {
-  width: 16px;
-  height: 16px;
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px;
+  max-width: 16px;
   flex-shrink: 0;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
