@@ -22,22 +22,24 @@ async function readRawBody(req) {
   });
 }
 
-// ── Response helper (mirrors the old jsonResponse, but uses res directly) ──
+// ── Response helper — uses raw Node.js http API (no Express) ──────────────
 function sendJSON(res, statusCode, payload, extraHeaders = {}) {
   const body = JSON.stringify(payload);
-  res
-    .status(statusCode)
-    .set({
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-      "Pragma": "no-cache",
-      "Expires": "0",
-      "X-Content-Type-Options": "nosniff",
-      "Referrer-Policy": "no-referrer",
-      "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-      ...extraHeaders,
-    })
-    .end(body);
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+    "Pragma": "no-cache",
+    "Expires": "0",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+    ...extraHeaders,
+  };
+  res.statusCode = statusCode;
+  for (const [key, value] of Object.entries(headers)) {
+    res.setHeader(key, value);
+  }
+  res.end(body);
 }
 
 // ── Header helper (case-insensitive, works with both Netlify and Vercel) ───
