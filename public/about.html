@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tentang See My CV — aplikasi review CV berbasis AI dengan pendekatan Senior HR Audit, stateless, aman, dan disesuaikan dengan target posisi dan job description."
+    />
+    <meta name="theme-color" content="#f4f9ff" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Tentang See My CV | Senior HR CV Audit" />
+    <meta
+      property="og:description"
+      content="Pelajari cara kerja See My CV — dari ekstraksi file di browser, AI review berbasis target posisi, hingga komitmen zero persistence terhadap data pengguna."
+    />
+    <meta property="og:type" content="website" />
+
+    <title>Tentang Kami | See My CV</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/styles/main.css" />
+    <style>
+      /* ── About Page — scoped styles ───────────────────────── */
+
+      .about-hero {
+        padding: 5rem 0 3.5rem;
+        text-align: center;
+      }
+
+      .about-hero h1 {
+        max-width: 780px;
+        margin: 0 auto 1.15rem;
+        font-size: clamp(2.4rem, 6vw, 4.2rem);
+        font-weight: 900;
+        line-height: 1.02;
+        letter-spacing: -0.055em;
+        color: var(--text-strong);
+      }
+
+      .about-hero h1 em {
+        font-style: normal;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .about-hero__lead {
+        max-width: 64ch;
+        margin: 0 auto 2rem;
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        line-height: 1.7;
+        color: var(--text-soft);
+      }
+
+      .about-hero__cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        justify-content: center;
+      }
+
+      /* ── Sections ─────────────────────────────────────────── */
+
+      .about-section {
+        margin-bottom: 4rem;
+      }
+
+      .about-section__header {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .about-section__header h2 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--text-strong);
+        margin-bottom: 0.65rem;
+      }
+
+      .about-section__header p {
+        max-width: 62ch;
+        margin: 0 auto;
+        font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+        line-height: 1.7;
+        color: var(--text-soft);
+      }
+
+      /* ── How it works — step cards ───────────────────────── */
+
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.15rem;
+      }
+
+      .step-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: var(--card-padding-lg);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82)),
+          var(--surface-glass);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+      }
+
+      .step-card__number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: #ffffff;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 0.85rem;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        flex-shrink: 0;
+      }
+
+      .step-card__icon {
+        font-size: 1.8rem;
+        line-height: 1;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: var(--text-strong);
+        margin: 0;
+      }
+
+      .step-card p {
+        font-size: 0.925rem;
+        line-height: 1.65;
+        color: var(--text-soft);
+        margin: 0;
+        flex: 1;
+      }
+
+      .step-connector {
+        position: absolute;
+        top: 50%;
+        right: -1.75rem;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: var(--text-dim);
+        pointer-events: none;
+      }
+
+      /* ── Privacy pillars ─────────────────────────────────── */
+
+      .privacy-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.15rem;
+      }
+
+      .privacy-card {
+        display: flex;
+        gap: 1.1rem;
+        align-items: flex-start;
+        padding: var(--card-padding-lg);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82)),
+          var(--surface-glass);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+      }
+
+      .privacy-card__badge {
+        display: grid;
+        place-items: center;
+        width: 2.8rem;
+        height: 2.8rem;
+        font-size: 1.3rem;
+        background: var(--primary-lighter);
+        border: 1px solid var(--line-blue);
+        border-radius: 0.9rem;
+        flex-shrink: 0;
+      }
+
+      .privacy-card h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text-strong);
+        margin: 0 0 0.4rem;
+      }
+
+      .privacy-card p {
+        font-size: 0.9rem;
+        line-height: 1.62;
+        color: var(--text-soft);
+        margin: 0;
+      }
+
+      /* ── Tech stack ──────────────────────────────────────── */
+
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+      }
+
+      .tech-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 1.35rem;
+        text-align: center;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82)),
+          var(--surface-glass);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+      }
+
+      .tech-card__icon {
+        font-size: 1.75rem;
+        line-height: 1;
+      }
+
+      .tech-card__name {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--text-strong);
+        letter-spacing: -0.01em;
+      }
+
+      .tech-card__role {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+
+      /* ── Highlight banner ────────────────────────────────── */
+
+      .highlight-banner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        margin-bottom: 4rem;
+      }
+
+      .highlight-banner__text {
+        padding: clamp(2rem, 4vw, 3rem);
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      }
+
+      .highlight-banner__text .eyebrow {
+        color: #93c5fd;
+        background: rgba(37, 99, 235, 0.25);
+        border-color: rgba(147, 197, 253, 0.25);
+        margin-bottom: 1.1rem;
+      }
+
+      .highlight-banner__text h2 {
+        font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: #ffffff;
+        margin-bottom: 0.85rem;
+        line-height: 1.15;
+      }
+
+      .highlight-banner__text p {
+        font-size: clamp(0.9rem, 1.6vw, 1rem);
+        line-height: 1.7;
+        color: #93c5fd;
+        margin-bottom: 1.75rem;
+      }
+
+      .highlight-banner__stats {
+        display: flex;
+        gap: 2rem;
+        padding: clamp(2rem, 4vw, 3rem);
+        background: linear-gradient(135deg, var(--primary-lighter), #dbeafe);
+        border-left: 1px solid var(--line-blue);
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .stat-item strong {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        font-weight: 900;
+        letter-spacing: -0.06em;
+        color: var(--primary-strong);
+        line-height: 1;
+      }
+
+      .stat-item span {
+        font-size: 0.875rem;
+        color: var(--text-soft);
+        font-weight: 500;
+      }
+
+      /* ── Creator card ────────────────────────────────────── */
+
+      .creator-card {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        padding: clamp(1.75rem, 4vw, 2.75rem);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82)),
+          var(--surface-glass);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        margin-bottom: 4rem;
+      }
+
+      .creator-card__avatar {
+        display: grid;
+        place-items: center;
+        width: 5rem;
+        height: 5rem;
+        font-size: 2rem;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 1.5rem;
+        flex-shrink: 0;
+        box-shadow: 0 16px 40px rgba(37, 99, 235, 0.22);
+      }
+
+      .creator-card__info {
+        flex: 1;
+      }
+
+      .creator-card__info h3 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        color: var(--text-strong);
+        margin: 0 0 0.3rem;
+      }
+
+      .creator-card__info .role {
+        font-size: 0.875rem;
+        color: var(--primary-strong);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      .creator-card__info p {
+        font-size: 0.925rem;
+        line-height: 1.68;
+        color: var(--text-soft);
+        margin: 0;
+        max-width: 72ch;
+      }
+
+      /* ── CTA Banner ──────────────────────────────────────── */
+
+      .cta-banner {
+        text-align: center;
+        padding: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+        margin-bottom: 4rem;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.12), transparent 60%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82));
+        border: 1px solid var(--line-blue);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+      }
+
+      .cta-banner h2 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--text-strong);
+        margin-bottom: 0.8rem;
+      }
+
+      .cta-banner p {
+        font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+        line-height: 1.65;
+        color: var(--text-soft);
+        max-width: 58ch;
+        margin: 0 auto 2rem;
+      }
+
+      .cta-banner__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        justify-content: center;
+      }
+
+      /* ── Responsive ──────────────────────────────────────── */
+
+      @media (max-width: 860px) {
+        .steps-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .step-connector {
+          display: none;
+        }
+
+        .tech-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .highlight-banner {
+          grid-template-columns: 1fr;
+        }
+
+        .highlight-banner__stats {
+          flex-direction: row;
+          flex-wrap: wrap;
+          border-left: none;
+          border-top: 1px solid var(--line-blue);
+        }
+
+        .creator-card {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .privacy-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tech-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .about-hero {
+          padding: 4rem 0 2.5rem;
+        }
+
+        .highlight-banner__stats {
+          gap: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+
+    <div class="site-shell">
+      <header class="app-header">
+        <nav class="nav" aria-label="Navigasi utama">
+          <a class="nav-brand" href="/" aria-label="See My CV beranda">
+            <span class="nav-brand__icon" aria-hidden="true"></span>
+            <span>See My CV</span>
+          </a>
+
+          <div class="nav-actions">
+            <span class="privacy-pill">Data tidak disimpan</span>
+            <a class="nav-link" href="/">Review CV</a>
+            <a class="nav-link" href="/about" aria-current="page">Tentang</a>
+          </div>
+        </nav>
+      </header>
+
+      <main id="main-content" class="main">
+
+        <!-- Hero -->
+        <section class="about-hero" aria-labelledby="about-hero-title">
+          <p class="eyebrow">Tentang See My CV</p>
+          <h1 id="about-hero-title">
+            Review CV Anda seperti<br />
+            <em>Senior HR melihatnya</em>
+          </h1>
+          <p class="about-hero__lead">
+            See My CV adalah alat evaluasi CV berbasis AI yang memberikan umpan balik kritis,
+            terstruktur, dan sesuai target posisi — bukan penilaian generik yang tidak membantu.
+          </p>
+          <div class="about-hero__cta">
+            <a class="button button--primary" href="/">Mulai Review CV Saya</a>
+            <a class="button button--ghost" href="mailto:support@seemycv.app">Hubungi Kami</a>
+          </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="about-section" aria-labelledby="how-heading">
+          <div class="about-section__header">
+            <p class="eyebrow">Cara Kerja</p>
+            <h2 id="how-heading">Tiga langkah menuju audit CV yang sesungguhnya</h2>
+            <p>Seluruh proses berlangsung dalam hitungan menit, mulai dari upload file hingga laporan audit yang siap Anda tindaklanjuti.</p>
+          </div>
+
+          <div class="steps-grid" role="list">
+
+            <article class="step-card" role="listitem">
+              <div style="display:flex;gap:.75rem;align-items:center;">
+                <span class="step-card__number" aria-label="Langkah 1">01</span>
+              </div>
+              <div class="step-card__icon" aria-hidden="true">📂</div>
+              <h3>Isi konteks lamaran &amp; upload CV</h3>
+              <p>
+                Masukkan target posisi, bidang industri, lama pengalaman, dan tempel job description
+                dari lowongan yang ingin Anda lamar. Upload file CV dalam format PDF atau DOCX
+                maksimal 5MB.
+              </p>
+              <span class="step-connector" aria-hidden="true">→</span>
+            </article>
+
+            <article class="step-card" role="listitem">
+              <div style="display:flex;gap:.75rem;align-items:center;">
+                <span class="step-card__number" aria-label="Langkah 2">02</span>
+              </div>
+              <div class="step-card__icon" aria-hidden="true">🔍</div>
+              <h3>Ekstraksi konten di browser Anda</h3>
+              <p>
+                File CV dibaca dan diekstrak langsung di browser menggunakan pdf.js dan mammoth.js.
+                Tidak ada file yang diunggah ke server kami — hanya teks hasil ekstraksi yang
+                dikirim untuk dianalisis, itupun hanya sekali dan tidak disimpan.
+              </p>
+              <span class="step-connector" aria-hidden="true">→</span>
+            </article>
+
+            <article class="step-card" role="listitem">
+              <div style="display:flex;gap:.75rem;align-items:center;">
+                <span class="step-card__number" aria-label="Langkah 3">03</span>
+              </div>
+              <div class="step-card__icon" aria-hidden="true">🧠</div>
+              <h3>AI membaca CV seperti Senior HR</h3>
+              <p>
+                Teks CV dianalisis oleh model AI terbaik yang tersedia — Gemini, Groq, Mistral,
+                atau fallback otomatis. Hasilnya bukan sekedar saran umum, melainkan audit menyeluruh
+                dengan skor, temuan kritis, risiko penolakan, dan rencana perbaikan yang konkret.
+              </p>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- Highlight Banner -->
+        <div class="highlight-banner" aria-label="Keunggulan See My CV">
+          <div class="highlight-banner__text">
+            <p class="eyebrow">Kenapa berbeda?</p>
+            <h2>Bukan sekadar "CV Checker" biasa</h2>
+            <p>
+              See My CV tidak hanya memeriksa format atau ejaan. Sistem kami mensimulasikan
+              cara seorang Senior HR menilai CV — mempertimbangkan konteks industri, level
+              jabatan, job description, dan sinyal-sinyal halus yang sering menjadi alasan
+              CV ditolak tanpa penjelasan.
+            </p>
+            <a class="button button--primary" href="/">Coba Sekarang — Gratis</a>
+          </div>
+          <div class="highlight-banner__stats" aria-label="Ringkasan kemampuan audit">
+            <div class="stat-item">
+              <strong>10+</strong>
+              <span>Dimensi evaluasi CV</span>
+            </div>
+            <div class="stat-item">
+              <strong>4</strong>
+              <span>Mode review tersedia</span>
+            </div>
+            <div class="stat-item">
+              <strong>0</strong>
+              <span>Data CV yang disimpan</span>
+            </div>
+            <div class="stat-item">
+              <strong>5+</strong>
+              <span>AI provider dengan fallback otomatis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacy -->
+        <section class="about-section" aria-labelledby="privacy-heading">
+          <div class="about-section__header">
+            <p class="eyebrow">Privasi &amp; Keamanan</p>
+            <h2 id="privacy-heading">Data Anda tidak pernah kami simpan</h2>
+            <p>
+              CV berisi data pribadi yang sensitif. Kami merancang See My CV dengan prinsip
+              <em>privacy by design</em> — bukan hanya kebijakan, tapi arsitektur teknis yang
+              memastikan data tidak bisa disimpan meski kami mau.
+            </p>
+          </div>
+
+          <div class="privacy-grid">
+            <article class="privacy-card">
+              <div class="privacy-card__badge" aria-hidden="true">🔒</div>
+              <div>
+                <h3>Ekstraksi di browser, bukan server</h3>
+                <p>
+                  File CV Anda tidak pernah diunggah ke server kami. Proses membaca dan
+                  mengekstrak teks dari PDF atau DOCX terjadi sepenuhnya di peramban browser
+                  Anda menggunakan pdf.js dan mammoth.js.
+                </p>
+              </div>
+            </article>
+
+            <article class="privacy-card">
+              <div class="privacy-card__badge" aria-hidden="true">⚡</div>
+              <div>
+                <h3>Pemrosesan real-time, tanpa database</h3>
+                <p>
+                  Teks hasil ekstraksi dikirim ke fungsi serverless, diproses secara real-time
+                  oleh AI, lalu hasilnya langsung dikirim kembali. Tidak ada database yang
+                  menerima atau menyimpan data CV Anda.
+                </p>
+              </div>
+            </article>
+
+            <article class="privacy-card">
+              <div class="privacy-card__badge" aria-hidden="true">🚫</div>
+              <div>
+                <h3>Zero persistence setelah respons dikirim</h3>
+                <p>
+                  Setelah hasil audit ditampilkan di browser Anda, data CV tidak tersisa di
+                  mana pun pada sisi server aplikasi. Setiap sesi adalah sesi baru yang
+                  berdiri sendiri.
+                </p>
+              </div>
+            </article>
+
+            <article class="privacy-card">
+              <div class="privacy-card__badge" aria-hidden="true">🛡️</div>
+              <div>
+                <h3>API key aman di sisi server</h3>
+                <p>
+                  Kunci API untuk layanan AI tidak pernah terekspos ke sisi browser. Seluruh
+                  komunikasi dengan AI dilakukan melalui serverless function yang hanya
+                  menerima request dari origin yang diizinkan.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="about-section" aria-labelledby="tech-heading">
+          <div class="about-section__header">
+            <p class="eyebrow">Teknologi</p>
+            <h2 id="tech-heading">Dibangun di atas teknologi yang tepat</h2>
+            <p>
+              Arsitektur static + serverless tanpa framework berat — ringan, cepat, dan mudah
+              di-maintain. Setiap komponen dipilih untuk keandalan dan keamanan.
+            </p>
+          </div>
+
+          <div class="tech-grid" role="list">
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">📄</div>
+              <div class="tech-card__name">pdf.js</div>
+              <div class="tech-card__role">Ekstraksi teks PDF berbasis teks di browser</div>
+            </article>
+
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">📝</div>
+              <div class="tech-card__name">mammoth.js</div>
+              <div class="tech-card__role">Ekstraksi teks DOCX di browser tanpa server</div>
+            </article>
+
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">⚡</div>
+              <div class="tech-card__name">Vercel Serverless</div>
+              <div class="tech-card__role">API proxy aman untuk komunikasi dengan AI</div>
+            </article>
+
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">🤖</div>
+              <div class="tech-card__name">Multi-model AI</div>
+              <div class="tech-card__role">Gemini, Groq, Mistral — fallback otomatis</div>
+            </article>
+
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">🎨</div>
+              <div class="tech-card__name">Vanilla JS + HTML</div>
+              <div class="tech-card__role">Tanpa framework, tanpa build tool, zero dependency</div>
+            </article>
+
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">🔑</div>
+              <div class="tech-card__name">Upstash Redis</div>
+              <div class="tech-card__role">Rate limiting opsional untuk proteksi API</div>
+            </article>
+
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">🌐</div>
+              <div class="tech-card__name">Inter (Google Fonts)</div>
+              <div class="tech-card__role">Tipografi utama yang bersih dan terbaca</div>
+            </article>
+
+            <article class="tech-card" role="listitem">
+              <div class="tech-card__icon" aria-hidden="true">🔒</div>
+              <div class="tech-card__name">CORS + Origin Guard</div>
+              <div class="tech-card__role">Proteksi endpoint API dari akses tidak sah</div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Creator -->
+        <article class="creator-card" aria-labelledby="creator-heading">
+          <div class="creator-card__avatar" aria-hidden="true">👨‍💻</div>
+          <div class="creator-card__info">
+            <p class="eyebrow" style="margin-bottom:.5rem;">Kreator</p>
+            <h3 id="creator-heading">Gusti I. Mahardhika</h3>
+            <p class="role">Builder · See My CV</p>
+            <p>
+              See My CV lahir dari frustrasi melihat alat review CV yang ada terlalu generik
+              dan tidak memberikan gambaran nyata tentang bagaimana recruiter membaca sebuah CV.
+              Aplikasi ini dibangun dengan filosofi sederhana: <strong>bantu pencari kerja
+              melihat CV mereka dari sudut pandang yang benar</strong> — kritis, kontekstual,
+              dan dapat ditindaklanjuti. Untuk pertanyaan dan masukan, kirim ke
+              <a href="mailto:support@seemycv.app" style="color:var(--primary);font-weight:600;">support@seemycv.app</a>.
+            </p>
+          </div>
+        </article>
+
+        <!-- CTA -->
+        <section class="cta-banner" aria-labelledby="cta-heading">
+          <p class="eyebrow">Siap memulai?</p>
+          <h2 id="cta-heading">Lihat CV Anda dari sudut pandang yang benar</h2>
+          <p>
+            Upload CV Anda sekarang dan dapatkan audit menyeluruh dalam hitungan menit.
+            Gratis, tanpa registrasi, dan data Anda tidak pernah disimpan.
+          </p>
+          <div class="cta-banner__actions">
+            <a class="button button--primary" href="/">Audit CV Saya Sekarang</a>
+            <a class="button button--ghost" href="mailto:support@seemycv.app">Kirim Pertanyaan</a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <p>© 2026 Gusti I. Mahardhika. Hak cipta dilindungi.</p>
+    </footer>
+  </body>
+</html>
