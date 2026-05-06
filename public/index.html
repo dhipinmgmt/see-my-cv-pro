@@ -3,628 +3,1084 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="See My CV adalah aplikasi review CV berbasis AI dengan gaya audit Senior HR, stateless, aman, dan disesuaikan dengan target posisi."
-    />
+    <meta name="description" content="See My CV — review CV berbasis AI dengan pendekatan Senior HR Audit. Dapatkan skor, temuan kritis, risiko penolakan, dan rencana perbaikan konkret dalam hitungan menit." />
     <meta name="theme-color" content="#f4f9ff" />
     <meta name="robots" content="index, follow" />
-
     <meta property="og:title" content="See My CV | Senior HR CV Audit" />
-    <meta
-      property="og:description"
-      content="Lihat CV Anda seperti Senior HR melihatnya. Dapatkan review CV yang kritis, objektif, dan sesuai target posisi."
-    />
+    <meta property="og:description" content="Lihat CV Anda seperti Senior HR melihatnya. Gratis, tanpa registrasi, data tidak disimpan." />
     <meta property="og:type" content="website" />
-
     <title>See My CV | Senior HR CV Audit</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles/main.css" />
+    <style>
+      .lp-wrap {
+        width: min(100% - 2rem, var(--container));
+        margin-inline: auto;
+      }
+      .lp-section {
+        padding: clamp(4rem, 8vw, 6.5rem) 0;
+      }
+      .lp-section + .lp-section {
+        padding-top: 0;
+      }
+      .section-header {
+        max-width: 760px;
+        margin-inline: auto;
+        margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+        text-align: center;
+      }
+      .section-header h2 {
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 900;
+        letter-spacing: -0.055em;
+        line-height: 1.05;
+        color: var(--text-strong);
+        margin-bottom: 0.85rem;
+      }
+      .section-header p {
+        font-size: clamp(1rem, 2vw, 1.12rem);
+        line-height: 1.72;
+        color: var(--text-soft);
+        max-width: 62ch;
+        margin-inline: auto;
+      }
 
-    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js" defer></script>
+      /* ── Hero ─────────────────────────────────────────────── */
+      .lp-hero {
+        padding: clamp(6rem, 10vw, 9rem) 0 clamp(4rem, 8vw, 6rem);
+        text-align: center;
+      }
+      .lp-hero__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 1rem 0.4rem 0.65rem;
+        margin-bottom: 1.75rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--primary-strong);
+        background: var(--primary-lighter);
+        border: 1px solid var(--line-blue);
+        border-radius: var(--radius-full);
+      }
+      .lp-hero__eyebrow::before {
+        content: "";
+        width: 0.44rem;
+        height: 0.44rem;
+        background: var(--primary);
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+      }
+      .lp-hero h1 {
+        font-size: clamp(3rem, 8.5vw, 6.5rem);
+        font-weight: 900;
+        letter-spacing: -0.075em;
+        line-height: 0.92;
+        color: var(--text-strong);
+        margin: 0 auto 1.5rem;
+        max-width: 960px;
+      }
+      .lp-hero h1 em {
+        font-style: normal;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .lp-hero__lead {
+        font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+        line-height: 1.7;
+        color: var(--text-soft);
+        max-width: 58ch;
+        margin: 0 auto 2.25rem;
+      }
+      .lp-hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        justify-content: center;
+        margin-bottom: 2.75rem;
+      }
+      .lp-hero__actions .button {
+        font-size: 1rem;
+        padding: 1rem 1.65rem;
+      }
+      .lp-hero__trust {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        justify-content: center;
+      }
+      .trust-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.42rem 0.85rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-full);
+        box-shadow: var(--shadow-xs);
+      }
+
+      /* ── Hero mockup ──────────────────────────────────────── */
+      .lp-hero__mockup {
+        position: relative;
+        margin: 3.5rem auto 0;
+        max-width: 800px;
+        padding: 1.75rem;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(24px);
+      }
+      .lp-hero__mockup::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(circle at 20% 0%, rgba(37, 99, 235, 0.06), transparent 55%);
+        pointer-events: none;
+      }
+      .mockup-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .mockup-bar__dots {
+        display: flex;
+        gap: 0.38rem;
+      }
+      .mockup-bar__dots i {
+        width: 0.68rem;
+        height: 0.68rem;
+        border-radius: 50%;
+        font-style: normal;
+      }
+      .mockup-bar__dots i:nth-child(1) { background: #f87171; }
+      .mockup-bar__dots i:nth-child(2) { background: #fbbf24; }
+      .mockup-bar__dots i:nth-child(3) { background: #34d399; }
+      .mockup-bar__label {
+        margin-left: 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-dim);
+      }
+      .mockup-grid {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+      .mockup-score {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(135deg, var(--primary-lighter), #dbeafe);
+        border: 1px solid var(--line-blue);
+        border-radius: var(--radius-lg);
+        min-width: 110px;
+      }
+      .mockup-score__number {
+        font-size: 3.5rem;
+        font-weight: 900;
+        letter-spacing: -0.06em;
+        line-height: 1;
+        color: var(--primary-strong);
+      }
+      .mockup-score__label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .mockup-score__badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.65rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--success-strong);
+        background: var(--success-soft);
+        border-radius: var(--radius-full);
+        white-space: nowrap;
+      }
+      .mockup-results {
+        display: grid;
+        gap: 0.65rem;
+      }
+      .mockup-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.65rem 0.9rem;
+        background: rgba(248, 251, 255, 0.9);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+      }
+      .mockup-row__label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-soft);
+        text-align: left;
+      }
+      .mockup-row__group {
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+      }
+      .mockup-row__bar {
+        position: relative;
+        width: 80px;
+        height: 6px;
+        background: var(--line);
+        border-radius: var(--radius-full);
+        overflow: hidden;
+      }
+      .mockup-row__bar-fill {
+        position: absolute;
+        left: 0; top: 0;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+      }
+      .mockup-tag {
+        display: inline-flex;
+        padding: 0.2rem 0.55rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        border-radius: var(--radius-full);
+        white-space: nowrap;
+      }
+      .mockup-tag--ok   { color: var(--success-strong); background: var(--success-soft); }
+      .mockup-tag--warn { color: var(--warning-strong); background: var(--warning-soft); }
+      .mockup-tag--bad  { color: var(--danger-strong);  background: var(--danger-soft); }
+
+      /* ── Why cards ─────────────────────────────────────────── */
+      .why-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .why-card {
+        padding: var(--card-padding-lg);
+        background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.82));
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        transition: transform var(--transition), box-shadow var(--transition);
+      }
+      .why-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+      }
+      .why-card__icon {
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.4rem;
+        background: var(--primary-lighter);
+        border: 1px solid var(--line-blue);
+        border-radius: 1rem;
+        margin-bottom: 1.15rem;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+      }
+      .why-card h3 {
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--text-strong);
+        margin-bottom: 0.55rem;
+      }
+      .why-card p {
+        font-size: 0.9rem;
+        line-height: 1.68;
+        color: var(--text-soft);
+      }
+
+      /* ── How it works ─────────────────────────────────────── */
+      .how-section {
+        background: linear-gradient(180deg, rgba(239,246,255,0.5), rgba(219,234,254,0.3));
+        border-radius: var(--radius-xl);
+        padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+        border: 1px solid var(--line-blue);
+      }
+      .how-steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        position: relative;
+      }
+      .how-steps::before {
+        content: "";
+        position: absolute;
+        top: 2.2rem;
+        left: calc(12.5% + 1.5rem);
+        right: calc(12.5% + 1.5rem);
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary-soft), var(--line-blue), var(--primary-soft));
+        z-index: 0;
+      }
+      .how-step {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+      }
+      .how-step__num {
+        display: grid;
+        place-items: center;
+        width: 4.5rem;
+        height: 4.5rem;
+        font-size: 1.15rem;
+        font-weight: 900;
+        color: #fff;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 1.45rem;
+        box-shadow: 0 12px 32px rgba(37, 99, 235, 0.28);
+        flex-shrink: 0;
+      }
+      .how-step h3 {
+        font-size: 0.98rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: var(--text-strong);
+        margin-bottom: 0.35rem;
+      }
+      .how-step p {
+        font-size: 0.875rem;
+        line-height: 1.65;
+        color: var(--text-soft);
+      }
+
+      /* ── What You Get ─────────────────────────────────────── */
+      .get-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .get-card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.15rem;
+        align-items: start;
+        padding: var(--card-padding-lg);
+        background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.82));
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+      }
+      .get-card__icon {
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.35rem;
+        background: var(--primary-lighter);
+        border: 1px solid var(--line-blue);
+        border-radius: 0.95rem;
+        flex-shrink: 0;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+      }
+      .get-card h3 {
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: var(--text-strong);
+        margin-bottom: 0.35rem;
+      }
+      .get-card p {
+        font-size: 0.875rem;
+        line-height: 1.65;
+        color: var(--text-soft);
+      }
+
+      /* ── Dark CTA banner ─────────────────────────────────── */
+      .dark-banner {
+        padding: clamp(3rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        border-radius: var(--radius-xl);
+        text-align: center;
+      }
+      .dark-banner .eyebrow {
+        color: #93c5fd;
+        background: rgba(37, 99, 235, 0.25);
+        border-color: rgba(147, 197, 253, 0.25);
+      }
+      .dark-banner h2 {
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 900;
+        letter-spacing: -0.055em;
+        line-height: 1.05;
+        color: #fff;
+        margin-bottom: 1rem;
+      }
+      .dark-banner p {
+        font-size: clamp(1rem, 2vw, 1.12rem);
+        line-height: 1.7;
+        color: #93c5fd;
+        max-width: 58ch;
+        margin: 0 auto 2.25rem;
+      }
+      .dark-banner__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        justify-content: center;
+      }
+      .dark-banner .button--ghost {
+        color: #fff;
+        background: rgba(255,255,255,0.12);
+        border-color: rgba(255,255,255,0.22);
+      }
+      .dark-banner .button--ghost:hover {
+        background: rgba(255,255,255,0.22);
+        color: #fff;
+      }
+
+      /* ── FAQ ──────────────────────────────────────────────── */
+      .faq-list {
+        max-width: 780px;
+        margin-inline: auto;
+        display: grid;
+        gap: 0.65rem;
+      }
+      .faq-item {
+        background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.82));
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-xs);
+        overflow: hidden;
+        transition: box-shadow var(--transition), border-color var(--transition);
+      }
+      .faq-item.is-open {
+        border-color: var(--line-blue);
+        box-shadow: var(--shadow-card);
+      }
+      .faq-question {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        padding: 1.15rem 1.35rem;
+        font-size: 0.975rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text-strong);
+        cursor: pointer;
+        background: none;
+        border: none;
+        text-align: left;
+        transition: color var(--transition);
+      }
+      .faq-item.is-open .faq-question { color: var(--primary-strong); }
+      .faq-question__icon {
+        flex-shrink: 0;
+        width: 1.6rem;
+        height: 1.6rem;
+        display: grid;
+        place-items: center;
+        background: var(--primary-lighter);
+        border: 1px solid var(--line-blue);
+        border-radius: 0.55rem;
+        transition: transform var(--transition), background var(--transition);
+      }
+      .faq-item.is-open .faq-question__icon {
+        transform: rotate(45deg);
+        background: var(--primary);
+        border-color: rgba(37,99,235,0.4);
+      }
+      .faq-question__icon svg { stroke: var(--primary-strong); transition: stroke var(--transition); }
+      .faq-item.is-open .faq-question__icon svg { stroke: #fff; }
+      .faq-answer {
+        display: none;
+        padding: 0 1.35rem 1.25rem;
+        font-size: 0.9rem;
+        line-height: 1.72;
+        color: var(--text-soft);
+      }
+      .faq-item.is-open .faq-answer { display: block; }
+
+      /* ── Footer ───────────────────────────────────────────── */
+      .lp-footer {
+        margin-top: 5rem;
+        padding: clamp(3rem, 6vw, 4.5rem) 0 2rem;
+        border-top: 1px solid var(--line);
+      }
+      .lp-footer__inner {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr 1fr 1fr;
+        gap: 2.5rem;
+        margin-bottom: 3rem;
+      }
+      .lp-footer__brand {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+      .lp-footer__brand-name {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--text-strong);
+      }
+      .lp-footer__brand-icon {
+        width: 2rem;
+        height: 2rem;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 0.72rem;
+        box-shadow: 0 8px 20px rgba(37,99,235,0.2);
+        flex-shrink: 0;
+      }
+      .lp-footer__brand p {
+        font-size: 0.875rem;
+        line-height: 1.68;
+        color: var(--text-soft);
+        max-width: 30ch;
+      }
+      .lp-footer__privacy {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.38rem 0.8rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--success-strong);
+        background: var(--success-soft);
+        border-radius: var(--radius-full);
+        width: fit-content;
+      }
+      .lp-footer__privacy::before {
+        content: "";
+        width: 0.42rem;
+        height: 0.42rem;
+        background: var(--success);
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(16,185,129,0.14);
+      }
+      .lp-footer__col h4 {
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .lp-footer__links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        list-style: none;
+      }
+      .lp-footer__links a {
+        font-size: 0.875rem;
+        color: var(--text-soft);
+        transition: color var(--transition);
+      }
+      .lp-footer__links a:hover { color: var(--primary-strong); }
+      .lp-footer__bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding-top: 1.75rem;
+        border-top: 1px solid var(--line);
+      }
+      .lp-footer__bottom p { font-size: 0.825rem; color: var(--text-dim); }
+      .lp-footer__bottom-links { display: flex; gap: 1.25rem; list-style: none; }
+      .lp-footer__bottom-links a {
+        font-size: 0.825rem;
+        color: var(--text-dim);
+        transition: color var(--transition);
+      }
+      .lp-footer__bottom-links a:hover { color: var(--primary-strong); }
+
+      /* ── Responsive ─────────────────────────────────────────*/
+      @media (max-width: 1024px) {
+        .why-grid { grid-template-columns: repeat(2, 1fr); }
+        .how-steps { grid-template-columns: repeat(2, 1fr); }
+        .how-steps::before { display: none; }
+        .lp-footer__inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      }
+      @media (max-width: 768px) {
+        .mockup-grid { grid-template-columns: 1fr; }
+        .mockup-score { flex-direction: row; align-items: center; min-width: unset; }
+        .get-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 560px) {
+        .why-grid { grid-template-columns: 1fr; }
+        .how-steps { grid-template-columns: 1fr 1fr; }
+        .lp-footer__inner { grid-template-columns: 1fr; }
+        .lp-footer__bottom { flex-direction: column; text-align: center; }
+      }
+      @media (max-width: 400px) {
+        .how-steps { grid-template-columns: 1fr; }
+      }
+    </style>
   </head>
 
   <body>
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
 
-    <div class="site-shell" data-app-shell>
-      <section
-  class="consent-gate"
-  data-consent-gate
-  aria-labelledby="consent-title"
-  aria-describedby="consent-description"
->
-  <div class="consent-orb consent-orb--one" aria-hidden="true"></div>
-  <div class="consent-orb consent-orb--two" aria-hidden="true"></div>
+    <!-- Navbar -->
+    <header class="app-header">
+      <nav class="nav" aria-label="Navigasi utama">
+        <a class="nav-brand" href="/" aria-label="See My CV beranda">
+          <span class="nav-brand__icon" aria-hidden="true"></span>
+          <span>See My CV</span>
+        </a>
+        <div class="nav-actions">
+          <span class="privacy-pill">Data tidak disimpan</span>
+          <a class="nav-link" href="/review">Review CV</a>
+          <a class="nav-link" href="/about">Tentang</a>
+          <a class="button button--primary" href="/review" style="font-size:0.875rem;padding:0.6rem 1.1rem;">Mulai Gratis</a>
+        </div>
+      </nav>
+    </header>
 
-  <div class="consent-panel consent-panel--legal">
-    <div class="brand-mark" aria-hidden="true">
-      <span class="brand-mark__core"></span>
-    </div>
+    <main id="main-content">
 
-    <p class="eyebrow">Formulir Persetujuan Pemrosesan Data Pribadi</p>
-    <h1 id="consent-title">Layanan Evaluasi Curriculum Vitae (CV)</h1>
-    <p id="consent-description" class="consent-lead">
-      Sebelum menggunakan See My CV, Anda perlu membaca dan menyetujui ketentuan
-      pemrosesan data pribadi berikut. Layanan ini memproses CV hanya untuk menghasilkan
-      audit, evaluasi, dan rekomendasi perbaikan CV secara otomatis.
-    </p>
+      <!-- ══ 1. HERO ══════════════════════════════════════════ -->
+      <section class="lp-hero" aria-labelledby="hero-title">
+        <div class="lp-wrap">
 
-    <div class="consent-summary-grid" aria-label="Ringkasan pemrosesan data">
-      <article>
-        <span aria-hidden="true">01</span>
-        <strong>Tujuan</strong>
-        <p>Analisis format, susunan, substansi, dan kesesuaian CV dengan target posisi.</p>
-      </article>
-      <article>
-        <span aria-hidden="true">02</span>
-        <strong>Data</strong>
-        <p>Informasi yang Anda cantumkan secara sadar dan sukarela di dalam CV.</p>
-      </article>
-      <article>
-        <span aria-hidden="true">03</span>
-        <strong>Proses</strong>
-        <p>Real-time, sementara, dan tidak disimpan dalam database aplikasi.</p>
-      </article>
-    </div>
+          <p class="lp-hero__eyebrow">Senior HR CV Audit · Gratis &amp; Tanpa Registrasi</p>
 
-    <div class="legal-expand-wrapper" id="legal-expand-wrapper">
-      <div class="legal-consent-box legal-consent-box--collapsed" id="legal-box" role="document" aria-label="Isi formulir persetujuan">
-      <section class="legal-section">
-        <h2>1. Tujuan Pemrosesan</h2>
-        <p>
-          Dengan menggunakan layanan ini, Saya menyatakan persetujuan untuk memberikan
-          dokumen dan/atau data pribadi Saya yang terdapat dalam CV untuk diproses melalui
-          See My CV. Pemrosesan dilakukan untuk tujuan analisis format, evaluasi susunan,
-          penilaian kesesuaian dengan target posisi, dan pemberian ulasan substansi atas
-          Curriculum Vitae yang Saya unggah.
-        </p>
-      </section>
+          <h1 id="hero-title">
+            Lihat CV Anda seperti<br /><em>Senior HR melihatnya</em>
+          </h1>
 
-      <section class="legal-section">
-        <h2>2. Jenis Data Pribadi yang Diproses</h2>
-        <p>
-          Data pribadi yang diproses adalah informasi yang secara sadar dan sukarela Saya
-          cantumkan di dalam dokumen CV yang diunggah. Saya memahami bahwa CV dapat memuat
-          data seperti nama, alamat email, nomor telepon, riwayat pendidikan, pengalaman kerja,
-          keterampilan, portofolio, dan informasi profesional lainnya.
-        </p>
-        <p class="legal-note">
-          Saya disarankan untuk tidak mencantumkan data pribadi yang bersifat spesifik atau
-          tidak relevan dengan kepentingan rekrutmen profesional, termasuk tetapi tidak terbatas
-          pada NIK, ras, agama, data kesehatan, informasi finansial, atau data sensitif lainnya.
-        </p>
-      </section>
+          <p class="lp-hero__lead">
+            Dapatkan audit CV menyeluruh berbasis AI — skor, temuan kritis,
+            risiko penolakan, dan rencana perbaikan konkret. Selesai dalam
+            60 detik, data tidak pernah disimpan.
+          </p>
 
-      <section class="legal-section">
-        <h2>3. Alur Pemrosesan Data</h2>
-        <p>
-          Saya memahami bahwa untuk menyelenggarakan evaluasi CV, sistem akan membaca dan
-          menganalisis teks dari CV yang Saya unggah. File CV diparse di peramban browser,
-          kemudian teks hasil ekstraksi dikirim ke fungsi serverless untuk diproses secara otomatis.
-        </p>
-        <ul>
-          <li>
-            Data dapat diproses melalui penyedia infrastruktur aplikasi, yaitu Netlify,
-            semata-mata untuk menjalankan layanan web dan fungsi serverless.
-          </li>
-          <li>
-            Data dapat diteruskan ke layanan AI pihak ketiga yang digunakan oleh See My CV
-            semata-mata untuk menghasilkan ulasan CV secara otomatis.
-          </li>
-          <li>
-            Pemrosesan dilakukan secara langsung, real-time, dan sementara selama aktivitas
-            evaluasi CV berlangsung.
-          </li>
-        </ul>
-      </section>
-
-      <section class="legal-section">
-        <h2>4. Penyimpanan dan Penghapusan Data</h2>
-        <p>
-          Saya memahami bahwa See My CV tidak melakukan penyimpanan terhadap dokumen CV
-          maupun data pribadi Saya dalam database atau media penyimpanan permanen aplikasi.
-          Data hanya diproses sementara untuk menghasilkan hasil review dan tidak disimpan oleh
-          aplikasi setelah respons ditampilkan pada browser Saya.
-        </p>
-      </section>
-
-      <section class="legal-section">
-        <h2>5. Hak Saya sebagai Subjek Data Pribadi</h2>
-        <p>
-          Karena sistem tidak menyimpan data secara permanen, penghapusan data pada sisi aplikasi
-          terjadi secara otomatis setelah proses evaluasi selesai. Saya memahami bahwa Saya dapat
-          menarik persetujuan dan menghentikan pemrosesan kapan saja dengan menutup halaman situs
-          sebelum proses evaluasi selesai.
-        </p>
-        <p>
-          Untuk pertanyaan mengenai pemrosesan data pribadi pada layanan ini, Saya dapat
-          menghubungi pengelola layanan melalui: <a href="mailto:support@seemycv.app">support@seemycv.app</a>.
-        </p>
-      </section>
-
-      <section class="legal-section">
-        <h2>6. Pernyataan Keabsahan dan Tanggung Jawab</h2>
-        <p>
-          Saya menyatakan bahwa seluruh data yang Saya unggah diberikan secara sadar, sukarela,
-          dan tanpa paksaan dari pihak mana pun. Apabila Saya mencantumkan data pribadi pihak lain,
-          termasuk tetapi tidak terbatas pada kontak referensi atau pemberi rekomendasi, Saya menjamin
-          telah memperoleh izin dari pemilik data tersebut.
-        </p>
-        <p>
-          Saya bertanggung jawab penuh atas keputusan Saya untuk mengunggah dokumen tersebut.
-          Jika terdapat data yang tidak relevan atau bersifat sensitif di dalam CV, Saya memahami bahwa
-          hal tersebut merupakan tanggung jawab Saya sebagai pengguna untuk melakukan penyaringan
-          sebelum mengunggah dokumen.
-        </p>
-      </section>
-      </div>
-      <div class="legal-fade" id="legal-fade" aria-hidden="true"></div>
-    </div>
-
-    <button
-      class="legal-expand-btn"
-      id="legal-expand-btn"
-      type="button"
-      aria-expanded="false"
-      aria-controls="legal-box"
-    >
-      <span id="legal-expand-label">Baca Selengkapnya</span>
-      <svg class="legal-expand-icon" id="legal-expand-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
-    <label class="consent-check consent-check--legal">
-      <input type="checkbox" data-consent-checkbox />
-      <span class="consent-check__box" aria-hidden="true"></span>
-      <span>
-        Saya telah membaca, memahami, dan menyetujui seluruh ketentuan dalam Formulir
-        Persetujuan Pemrosesan Data Pribadi di atas. Saya memberikan persetujuan agar CV Saya
-        diproses sesuai dengan syarat dan ketentuan yang berlaku.
-      </span>
-    </label>
-
-    <button class="button button--primary button--wide" type="button" data-consent-continue disabled>
-      Saya Setuju dan Lanjutkan
-    </button>
-  </div>
-</section>
-
-      <header class="app-header" data-app-header hidden>
-        <nav class="nav" aria-label="Navigasi utama">
-          <a class="nav-brand" href="/" aria-label="See My CV beranda">
-            <span class="nav-brand__icon" aria-hidden="true"></span>
-            <span>See My CV</span>
-          </a>
-
-          <div class="nav-actions">
-            <span class="privacy-pill">Data tidak disimpan</span>
-            <a class="nav-link" href="/review" aria-current="page">Review CV</a>
-            <a class="nav-link" href="/about">Tentang</a>
+          <div class="lp-hero__actions">
+            <a class="button button--primary" href="/review">Audit CV Saya Sekarang →</a>
+            <a class="button button--ghost" href="#how-it-works">Lihat Cara Kerja</a>
           </div>
-        </nav>
-      </header>
 
-      <main id="main-content" class="main" data-main hidden>
-        <section class="hero hero--compact" aria-labelledby="hero-title">
-          <div class="hero__content">
-            <p class="eyebrow">Senior HR CV Audit</p>
-            <h1 id="hero-title">Review CV yang lebih kritis, objektif, dan sesuai target posisi.</h1>
-            <p class="hero__lead">
-              See My CV membantu Anda melihat CV dari sudut pandang recruiter: apa yang sudah kuat,
-              apa yang berisiko ditolak, dan apa yang perlu diperbaiki terlebih dahulu.
-            </p>
+          <div class="lp-hero__trust">
+            <span class="trust-chip">📄 PDF &amp; DOCX</span>
+            <span class="trust-chip">🔒 Data tidak disimpan</span>
+            <span class="trust-chip">⚡ Hasil dalam 60 detik</span>
+            <span class="trust-chip">🤖 Multi-model AI</span>
+            <span class="trust-chip">🆓 Gratis, tanpa registrasi</span>
+          </div>
 
-            <div class="hero__actions" aria-label="Aksi utama">
-              <a class="button button--primary" href="#review-area">Mulai Review CV</a>
-              <span class="feature-pill">PDF/DOCX • Maksimal 5MB</span>
+          <!-- UI Mockup -->
+          <div class="lp-hero__mockup" aria-hidden="true">
+            <div class="mockup-bar">
+              <div class="mockup-bar__dots"><i></i><i></i><i></i></div>
+              <span class="mockup-bar__label">See My CV — Hasil Audit Senior HR</span>
+            </div>
+            <div class="mockup-grid">
+              <div class="mockup-score">
+                <div class="mockup-score__number">82</div>
+                <div class="mockup-score__label">Audit Score</div>
+                <div class="mockup-score__badge">✓ Role-fit ready</div>
+              </div>
+              <div class="mockup-results">
+                <div class="mockup-row">
+                  <span class="mockup-row__label">Format &amp; Struktur</span>
+                  <div class="mockup-row__group">
+                    <div class="mockup-row__bar"><div class="mockup-row__bar-fill" style="width:88%"></div></div>
+                    <span class="mockup-tag mockup-tag--ok">88</span>
+                  </div>
+                </div>
+                <div class="mockup-row">
+                  <span class="mockup-row__label">Relevansi Target Posisi</span>
+                  <div class="mockup-row__group">
+                    <div class="mockup-row__bar"><div class="mockup-row__bar-fill" style="width:76%"></div></div>
+                    <span class="mockup-tag mockup-tag--warn">76</span>
+                  </div>
+                </div>
+                <div class="mockup-row">
+                  <span class="mockup-row__label">Kekuatan Pencapaian</span>
+                  <div class="mockup-row__group">
+                    <div class="mockup-row__bar"><div class="mockup-row__bar-fill" style="width:55%"></div></div>
+                    <span class="mockup-tag mockup-tag--bad">55</span>
+                  </div>
+                </div>
+                <div class="mockup-row">
+                  <span class="mockup-row__label">Bahasa &amp; Keterbacaan</span>
+                  <div class="mockup-row__group">
+                    <div class="mockup-row__bar"><div class="mockup-row__bar-fill" style="width:91%"></div></div>
+                    <span class="mockup-tag mockup-tag--ok">91</span>
+                  </div>
+                </div>
+                <div class="mockup-row">
+                  <span class="mockup-row__label">Kelengkapan Kontak</span>
+                  <div class="mockup-row__group">
+                    <div class="mockup-row__bar"><div class="mockup-row__bar-fill" style="width:100%"></div></div>
+                    <span class="mockup-tag mockup-tag--ok">100</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="hero__visual hero__visual--compact" aria-hidden="true">
-            <div class="metric-card metric-card--score">
-              <span class="metric-card__label">Audit Score</span>
-              <strong>86</strong>
-              <span class="metric-card__caption">Role-fit ready</span>
-            </div>
-            <div class="mesh-card mesh-card--summary">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+        </div>
+      </section>
+
+      <!-- ══ 2. WHY USE SEE MY CV ══════════════════════════════ -->
+      <section class="lp-section" aria-labelledby="why-heading">
+        <div class="lp-wrap">
+          <div class="section-header">
+            <p class="eyebrow">Kenapa See My CV?</p>
+            <h2 id="why-heading">Lebih dari sekedar pengecekan format</h2>
+            <p>See My CV mensimulasikan cara seorang Senior HR menilai CV — kontekstual, kritis, dan langsung menunjuk masalah yang menyebabkan CV Anda diabaikan.</p>
           </div>
-        </section>
+          <div class="why-grid" role="list">
 
-        <section id="review-area" class="app-flow" aria-label="Alur review CV">
-          <section class="flow-card flow-card--input panel" data-upload-section aria-labelledby="upload-title">
-            <div class="flow-card__header">
-              <div>
-                <p class="eyebrow">Langkah 1–3</p>
-                <h2 id="upload-title">Masukkan target posisi dan upload CV</h2>
-                <p>
-                  Isi konteks lamaran agar hasil review tidak generik. Job description bersifat opsional,
-                  tetapi sangat membantu untuk membaca kesesuaian CV dengan posisi.
-                </p>
-              </div>
+            <article class="why-card" role="listitem">
+              <div class="why-card__icon">🎯</div>
+              <h3>Disesuaikan dengan Target Posisi</h3>
+              <p>Bukan review generik. Analisis mempertimbangkan target posisi, bidang industri, level pengalaman, dan job description yang Anda tempel langsung.</p>
+            </article>
 
-              <ol class="step-indicator" aria-label="Tahapan review CV">
-                <li class="is-active"><span>1</span>Target</li>
-                <li><span>2</span>Upload</li>
-                <li><span>3</span>Audit</li>
-              </ol>
-            </div>
+            <article class="why-card" role="listitem">
+              <div class="why-card__icon">📊</div>
+              <h3>Skor per Dimensi CV</h3>
+              <p>Nilai setiap aspek CV secara terpisah — format, pencapaian, relevansi, keterbacaan, dan lebih dari 10 dimensi lainnya dengan catatan spesifik.</p>
+            </article>
 
-            <form class="upload-form" data-upload-form novalidate>
-              <div class="career-grid" aria-label="Target karier">
-                <div class="field-group">
-                  <label for="target-role">Target posisi <span>*</span></label>
-                  <input
-                    id="target-role"
-                    type="text"
-                    name="targetRole"
-                    data-target-role
-                    placeholder="Contoh: Digital Marketing Specialist"
-                    autocomplete="organization-title"
-                    required
-                  />
-                </div>
+            <article class="why-card" role="listitem">
+              <div class="why-card__icon">🚫</div>
+              <h3>Kesalahan Fatal &amp; Risiko Penolakan</h3>
+              <p>Tahu persis mana kesalahan yang langsung menyebabkan CV dibuang, dan mana sinyal yang membuat recruiter ragu sebelum memanggil Anda.</p>
+            </article>
 
-                <div class="field-group">
-                  <label for="industry">Bidang industri</label>
-                  <input
-                    id="industry"
-                    type="text"
-                    name="industry"
-                    data-industry
-                    placeholder="Contoh: FMCG, technology, finance"
-                  />
-                </div>
+            <article class="why-card" role="listitem">
+              <div class="why-card__icon">✍️</div>
+              <h3>Contoh Rewrite Kalimat</h3>
+              <p>Tidak hanya memberi tahu masalah — AI memberikan contoh konkret cara menulis ulang kalimat CV Anda agar lebih kuat dan meyakinkan.</p>
+            </article>
 
-                <div class="field-group">
-                  <label for="experience-level">Lama pengalaman kerja</label>
-                  <select id="experience-level" name="experienceLevel" data-experience-level>
-                    <option value="Fresh Graduate">Fresh Graduate (0 tahun)</option>
-                    <option value="Junior" selected>Junior (1–3 tahun)</option>
-                    <option value="Mid-Level">Mid-Level (4–6 tahun)</option>
-                    <option value="Senior">Senior (7+ tahun)</option>
-                    <option value="Career Switcher">Career Switcher (Berganti karier)</option>
-                  </select>
-                </div>
+            <article class="why-card" role="listitem">
+              <div class="why-card__icon">🔒</div>
+              <h3>Privasi Penuh, Zero Persistence</h3>
+              <p>File CV tidak pernah diunggah ke server. Ekstraksi terjadi di browser Anda. Data tidak tersimpan di mana pun setelah proses selesai.</p>
+            </article>
 
-                <div class="field-group">
-                  <label for="review-mode">Level review</label>
-                  <select id="review-mode" name="reviewMode" data-review-mode>
-                    <option value="balanced">Ramah</option>
-                    <option value="senior_hr" selected>Seimbang</option>
-                    <option value="strict">Sangat Kritis</option>
-                  </select>
-                </div>
+            <article class="why-card" role="listitem">
+              <div class="why-card__icon">🤖</div>
+              <h3>Multi-Model AI dengan Fallback</h3>
+              <p>Didukung Gemini, Groq, Mistral, dan lainnya — dengan fallback otomatis agar layanan tetap tersedia meski satu provider sedang down.</p>
+            </article>
 
-                <div class="field-group field-group--full">
-                  <label for="job-description">Job description lowongan <span>opsional</span></label>
-                  <textarea
-                    id="job-description"
-                    name="jobDescription"
-                    data-job-description
-                    rows="6"
-                    placeholder="Paste deskripsi pekerjaan dari LinkedIn, JobStreet, Glints, atau platform lain."
-                  ></textarea>
-                </div>
-              </div>
+          </div>
+        </div>
+      </section>
 
-              <div class="upload-block" aria-label="Upload CV">
-                <div class="upload-block__copy">
-                  <h3>Upload CV</h3>
-                  <p>Gunakan file PDF atau DOCX berbasis teks. PDF hasil scan gambar belum didukung.</p>
-                </div>
+      <!-- ══ 3. HOW IT WORKS ═══════════════════════════════════ -->
+      <section class="lp-section" id="how-it-works" aria-labelledby="how-heading">
+        <div class="lp-wrap">
+          <div class="section-header">
+            <p class="eyebrow">Cara Kerja</p>
+            <h2 id="how-heading">Dari upload ke hasil audit dalam hitungan menit</h2>
+            <p>Empat langkah sederhana — tidak perlu mendaftar, tidak perlu menginstal apapun.</p>
+          </div>
+          <div class="how-section">
+            <div class="how-steps" role="list">
 
-                <label
-                  class="upload-zone"
-                  for="cv-file"
-                  data-drop-zone
-                  aria-describedby="upload-help upload-error"
-                >
-                  <input
-                    id="cv-file"
-                    class="sr-only"
-                    type="file"
-                    accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    data-file-input
-                  />
-
-                  <span class="upload-zone__icon" aria-hidden="true">
-                    <svg viewBox="0 0 48 48" role="img">
-                      <path d="M24 7v24" />
-                      <path d="M14 17 24 7l10 10" />
-                      <path d="M9 31v6a4 4 0 0 0 4 4h22a4 4 0 0 0 4-4v-6" />
-                    </svg>
-                  </span>
-
-                  <span class="upload-zone__title">Tarik CV ke sini</span>
-                  <span class="upload-zone__text">atau klik untuk memilih file</span>
-                  <span id="upload-help" class="upload-zone__meta">PDF atau DOCX • Maksimal 5MB</span>
-                </label>
-              </div>
-
-              <p id="upload-error" class="form-error" data-upload-error role="alert" hidden></p>
-
-              <div class="file-preview" data-file-preview hidden>
-                <div class="file-preview__icon" data-file-badge aria-hidden="true">DOC</div>
+              <article class="how-step" role="listitem">
+                <div class="how-step__num">01</div>
                 <div>
-                  <p class="file-preview__name" data-file-name></p>
-                  <p class="file-preview__meta">
-                    <span data-file-size></span>
-                    <span aria-hidden="true">•</span>
-                    <span data-file-type></span>
-                  </p>
+                  <h3>Isi Konteks Lamaran</h3>
+                  <p>Masukkan target posisi, industri, dan level pengalaman. Tempel job description dari lowongan untuk hasil yang lebih akurat.</p>
                 </div>
-                <button class="icon-button" type="button" data-remove-file aria-label="Hapus file terpilih">
-                  ×
-                </button>
-              </div>
+              </article>
 
-              <div class="form-footer">
-                <button class="button button--primary" type="submit" data-review-button disabled>
-                  Audit CV Sekarang
-                </button>
-                <p>
-                  Proses review berjalan secara stateless. File tidak disimpan setelah respons dikirim.
-                </p>
-              </div>
-            </form>
-          </section>
-
-        </section>
-
-        <section class="panel loading-panel" aria-live="polite" data-loading-section hidden>
-          <div class="loading-copy">
-            <p class="eyebrow">Sedang diproses</p>
-            <h2 data-loading-title>Mengekstrak konten dokumen...</h2>
-            <p data-loading-description>
-              Sistem sedang membaca struktur CV Anda secara sementara di browser.
-            </p>
-          </div>
-
-          <div class="skeleton-stack" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </section>
-
-        <section class="result-panel result-panel--final" aria-labelledby="result-title" data-result-section hidden>
-          <div class="result-toolbar">
-            <div>
-              <p class="eyebrow">Senior HR Audit</p>
-              <h2 id="result-title">Hasil Review CV Anda</h2>
-              <p class="result-toolbar__description">
-                Baca ringkasan utama terlebih dahulu, lalu lanjut ke temuan kritis dan rencana perbaikan.
-              </p>
-            </div>
-
-            <div class="result-actions">
-              <button class="button button--ghost" type="button" data-copy-result>
-                Salin Hasil
-              </button>
-              <button class="button button--ghost" type="button" data-download-result>
-                Unduh .txt
-              </button>
-              <button class="button button--secondary" type="button" data-reset-review>
-                Review CV Lain
-              </button>
-            </div>
-          </div>
-
-          <section class="result-group result-group--summary" aria-labelledby="summary-heading">
-            <div class="result-group__header">
-              <p class="eyebrow">Executive Summary</p>
-              <h3 id="summary-heading">Gambaran utama kualitas CV</h3>
-            </div>
-
-            <article class="score-card panel">
-              <div class="score-ring" data-score-ring style="--score: 0" aria-label="Skor keseluruhan CV">
-                <svg viewBox="0 0 120 120" aria-hidden="true">
-                  <circle class="score-ring__track" cx="60" cy="60" r="52"></circle>
-                  <circle class="score-ring__value" cx="60" cy="60" r="52"></circle>
-                </svg>
-                <div class="score-ring__number">
-                  <strong data-score-value>0</strong>
-                  <span>/100</span>
+              <article class="how-step" role="listitem">
+                <div class="how-step__num">02</div>
+                <div>
+                  <h3>Upload CV Anda</h3>
+                  <p>Upload file PDF atau DOCX maksimal 5MB. Konten CV diekstrak langsung di browser — file tidak dikirim ke server kami.</p>
                 </div>
-              </div>
+              </article>
 
+              <article class="how-step" role="listitem">
+                <div class="how-step__num">03</div>
+                <div>
+                  <h3>AI Menganalisis CV</h3>
+                  <p>Model AI terbaik membaca CV Anda dengan sudut pandang Senior HR — menilai kekuatan, kelemahan, dan peluang yang terlewat.</p>
+                </div>
+              </article>
+
+              <article class="how-step" role="listitem">
+                <div class="how-step__num">04</div>
+                <div>
+                  <h3>Terima &amp; Tindaklanjuti</h3>
+                  <p>Baca laporan audit lengkap, unduh hasilnya, lalu perbaiki CV Anda berdasarkan prioritas yang sudah disusunkan.</p>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ 4. WHAT YOU GET ═══════════════════════════════════ -->
+      <section class="lp-section" aria-labelledby="get-heading">
+        <div class="lp-wrap">
+          <div class="section-header">
+            <p class="eyebrow">Yang Anda Dapatkan</p>
+            <h2 id="get-heading">Laporan audit lengkap, bukan sekadar skor</h2>
+            <p>Setiap hasil review mencakup semua informasi yang Anda butuhkan untuk memperbaiki CV dan meningkatkan peluang lolos seleksi.</p>
+          </div>
+          <div class="get-grid" role="list">
+
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">🔢</div>
               <div>
-                <h3>Skor Keseluruhan</h3>
-                <p data-summary-text>
-                  Ringkasan hasil review akan muncul di sini setelah analisis selesai.
-                </p>
-                <div class="verdict-box">
-                  <strong>Final Verdict</strong>
-                  <p data-verdict-text>Belum tersedia.</p>
-                </div>
+                <h3>Skor Keseluruhan &amp; Per Dimensi</h3>
+                <p>Nilai total CV dari 0–100, dengan breakdown lebih dari 10 dimensi — format, pencapaian, relevansi posisi, keterbacaan, dan lainnya.</p>
               </div>
             </article>
 
-            <div class="result-grid result-grid--summary">
-              <article class="review-card review-card--wide">
-                <div class="review-card__head">
-                  <span aria-hidden="true">👀</span>
-                  <h3>Kesan Senior HR dalam 10 Detik Pertama</h3>
-                </div>
-                <p class="review-paragraph" data-first-impression></p>
-              </article>
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">👀</div>
+              <div>
+                <h3>Kesan Senior HR dalam 10 Detik</h3>
+                <p>Simulasi kesan pertama recruiter berpengalaman saat melihat CV Anda — penilaian jujur yang mencerminkan realita proses seleksi.</p>
+              </div>
+            </article>
 
-              <article class="review-card">
-                <div class="review-card__head">
-                  <span aria-hidden="true">🎯</span>
-                  <h3>Kesesuaian dengan Target Posisi</h3>
-                </div>
-                <div class="mini-score">
-                  <strong data-target-fit-score>0</strong>
-                  <span>/100</span>
-                </div>
-                <p class="review-paragraph" data-target-fit-assessment></p>
-              </article>
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">🎯</div>
+              <div>
+                <h3>Penilaian Kesesuaian Target Posisi</h3>
+                <p>Seberapa kuat CV relevan dengan posisi dan job description yang dilamar, dengan analisis gap yang harus ditutup.</p>
+              </div>
+            </article>
 
-              <article class="review-card">
-                <div class="review-card__head">
-                  <span aria-hidden="true">📊</span>
-                  <h3>Skor Per Dimensi</h3>
-                </div>
-                <div class="dimension-list" data-dimension-list></div>
-              </article>
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">⚠️</div>
+              <div>
+                <h3>Kelemahan Kritis &amp; Kesalahan Fatal</h3>
+                <p>Daftar masalah paling urgent — dibedakan antara yang langsung menyebabkan penolakan dan yang menurunkan peluang lolos.</p>
+              </div>
+            </article>
+
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">🛠️</div>
+              <div>
+                <h3>Prioritas Perbaikan Berurutan</h3>
+                <p>Daftar tindakan disusun berdasarkan dampak terbesar — Anda tahu harus memperbaiki apa dulu tanpa perlu menebak-nebak.</p>
+              </div>
+            </article>
+
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">✍️</div>
+              <div>
+                <h3>Contoh Rewrite Sebelum &amp; Sesudah</h3>
+                <p>Kalimat konkret versi "sebelum" dan "sesudah" yang menunjukkan persis cara menulis ulang poin-poin lemah di CV Anda.</p>
+              </div>
+            </article>
+
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">🔍</div>
+              <div>
+                <h3>Review per Bagian CV</h3>
+                <p>Feedback spesifik untuk setiap seksi — Ringkasan, Pengalaman, Pendidikan, Keterampilan, hingga bagian lain yang ada di CV Anda.</p>
+              </div>
+            </article>
+
+            <article class="get-card" role="listitem">
+              <div class="get-card__icon">💡</div>
+              <div>
+                <h3>Saran &amp; Rekomendasi Strategis</h3>
+                <p>Rekomendasi tambahan yang bersifat strategis — melengkapi perbaikan teknis agar CV Anda siap bersaing di pasar kerja nyata.</p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ CTA BANNER ════════════════════════════════════════ -->
+      <section class="lp-section" aria-labelledby="cta-heading">
+        <div class="lp-wrap">
+          <div class="dark-banner">
+            <p class="eyebrow">Siap memulai?</p>
+            <h2 id="cta-heading">Upload CV Anda dan lihat hasilnya sekarang</h2>
+            <p>Gratis, tanpa registrasi, dan selesai dalam hitungan menit. Data CV Anda tidak pernah disimpan.</p>
+            <div class="dark-banner__actions">
+              <a class="button button--primary" href="/review">Audit CV Saya →</a>
+              <a class="button button--ghost" href="/about">Pelajari Lebih Lanjut</a>
             </div>
-          </section>
+          </div>
+        </div>
+      </section>
 
-          <section class="result-group result-group--critical" aria-labelledby="critical-heading">
-            <div class="result-group__header">
-              <p class="eyebrow">Critical Findings</p>
-              <h3 id="critical-heading">Temuan yang paling perlu diperhatikan</h3>
-            </div>
+      <!-- ══ 5. FAQ ════════════════════════════════════════════ -->
+      <section class="lp-section" aria-labelledby="faq-heading">
+        <div class="lp-wrap">
+          <div class="section-header">
+            <p class="eyebrow">FAQ</p>
+            <h2 id="faq-heading">Pertanyaan yang sering ditanyakan</h2>
+          </div>
+          <div class="faq-list">
 
-            <div class="result-grid">
-              <article class="review-card review-card--danger">
-                <div class="review-card__head">
-                  <span aria-hidden="true">🚫</span>
-                  <h3>Kesalahan Fatal</h3>
-                </div>
-                <ul data-fatal-mistakes-list></ul>
-              </article>
-
-              <article class="review-card review-card--warning">
-                <div class="review-card__head">
-                  <span aria-hidden="true">🧭</span>
-                  <h3>Potensi Alasan CV Ditolak</h3>
-                </div>
-                <ul data-rejection-risks-list></ul>
-              </article>
-
-              <article class="review-card review-card--weaknesses review-card--wide">
-                <div class="review-card__head">
-                  <span aria-hidden="true">⚠️</span>
-                  <h3>Kelemahan Kritis</h3>
-                </div>
-                <ul data-critical-weaknesses-list></ul>
-              </article>
-            </div>
-          </section>
-
-          <section class="result-group result-group--action" aria-labelledby="action-heading">
-            <div class="result-group__header">
-              <p class="eyebrow">Action Plan</p>
-              <h3 id="action-heading">Langkah perbaikan yang harus diprioritaskan</h3>
-            </div>
-
-            <div class="result-grid">
-              <article class="review-card review-card--wide">
-                <div class="review-card__head">
-                  <span aria-hidden="true">🛠️</span>
-                  <h3>Prioritas Perbaikan</h3>
-                </div>
-                <div class="priority-list" data-priority-fixes-list></div>
-              </article>
-
-              <article class="review-card review-card--wide">
-                <div class="review-card__head">
-                  <span aria-hidden="true">✍️</span>
-                  <h3>Contoh Perbaikan Kalimat</h3>
-                </div>
-                <div class="rewrite-list" data-rewrite-examples-list></div>
-              </article>
-
-              <article class="review-card review-card--recommendations review-card--wide">
-                <div class="review-card__head">
-                  <span aria-hidden="true">💡</span>
-                  <h3>Saran & Rekomendasi</h3>
-                </div>
-                <ul data-recommendations-list></ul>
-              </article>
-            </div>
-          </section>
-
-          <section class="result-group result-group--detail" aria-labelledby="detail-heading">
-            <div class="result-group__header">
-              <p class="eyebrow">Detail Review</p>
-              <h3 id="detail-heading">Catatan per bagian CV</h3>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" type="button">
+                <span>Apakah See My CV benar-benar gratis?</span>
+                <div class="faq-question__icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </button>
+              <div class="faq-answer">Ya, See My CV sepenuhnya gratis. Tidak ada biaya tersembunyi, tidak perlu kartu kredit, dan tidak perlu membuat akun. Cukup upload CV dan dapatkan hasil audit langsung.</div>
             </div>
 
-            <div class="result-grid">
-              <article class="review-card review-card--strengths">
-                <div class="review-card__head">
-                  <span aria-hidden="true">✅</span>
-                  <h3>Kekuatan</h3>
-                </div>
-                <ul data-strengths-list></ul>
-              </article>
-
-              <article class="review-card review-card--sections">
-                <div class="review-card__head">
-                  <span aria-hidden="true">🔍</span>
-                  <h3>Review Per Bagian</h3>
-                </div>
-                <div class="section-review-list" data-section-review-list></div>
-              </article>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" type="button">
+                <span>Apakah CV saya aman? Apakah data saya disimpan?</span>
+                <div class="faq-question__icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </button>
+              <div class="faq-answer">File CV Anda tidak pernah diunggah ke server kami. Proses ekstraksi teks terjadi sepenuhnya di browser menggunakan pdf.js dan mammoth.js. Hanya teks hasil ekstraksi yang dikirim untuk dianalisis AI — diproses real-time tanpa disimpan ke database mana pun. Setelah hasil ditampilkan, tidak ada data yang tersisa di sisi server.</div>
             </div>
-          </section>
-        </section>
 
-        <section class="panel error-panel" data-error-section hidden>
-          <p class="eyebrow">Terjadi kendala</p>
-          <h2>Review belum bisa diproses</h2>
-          <p data-error-message>
-            Semua provider AI sedang tidak tersedia. Silakan coba lagi nanti.
-          </p>
-          <button class="button button--secondary" type="button" data-error-reset>
-            Coba Lagi
-          </button>
-        </section>
-      </main>
-    </div>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" type="button">
+                <span>Format file apa saja yang didukung?</span>
+                <div class="faq-question__icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </button>
+              <div class="faq-answer">See My CV mendukung PDF dan DOCX maksimal 5MB. Untuk PDF, pastikan file berbasis teks (bukan hasil scan gambar) karena aplikasi ini tidak menggunakan OCR. Jika CV Anda adalah PDF scan, konversikan ke DOCX atau gunakan PDF yang dibuat langsung dari Word, Google Docs, atau aplikasi sejenis.</div>
+            </div>
 
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" type="button">
+                <span>Berapa lama waktu yang dibutuhkan untuk mendapat hasil?</span>
+                <div class="faq-question__icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </button>
+              <div class="faq-answer">Ekstraksi file di browser biasanya selesai dalam 1–5 detik. Analisis AI membutuhkan 20–60 detik tergantung panjang CV dan beban server AI provider. Jika satu provider tidak merespons, sistem otomatis berpindah ke provider cadangan.</div>
+            </div>
 
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" type="button">
+                <span>Seberapa akurat hasil audit dari See My CV?</span>
+                <div class="faq-question__icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </button>
+              <div class="faq-answer">See My CV menggunakan model AI terkini yang dioptimalkan dengan prompt khusus untuk meniru cara berpikir Senior HR. Hasil yang diberikan bersifat referensi dan rekomendasi — bukan jaminan lolos seleksi. Setiap keputusan rekrutmen tetap ada di tangan recruiter manusia dengan konteks perusahaan masing-masing.</div>
+            </div>
 
-    <footer class="site-footer">
-      <p>© 2026 Gusti I. Mahardhika. Hak cipta dilindungi.</p>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" type="button">
+                <span>Apakah job description wajib diisi?</span>
+                <div class="faq-question__icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </button>
+              <div class="faq-answer">Opsional, tapi sangat direkomendasikan. Dengan job description, AI dapat menilai seberapa kuat kecocokan CV dengan kebutuhan spesifik posisi. Tanpa job description, analisis tetap berjalan menggunakan standar umum untuk posisi dan industri yang disebutkan.</div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" type="button">
+                <span>Apakah saya bisa menggunakan See My CV berulang kali?</span>
+                <div class="faq-question__icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke-width="2" stroke-linecap="round"/></svg></div>
+              </button>
+              <div class="faq-answer">Ya, tidak ada batasan jumlah review per hari untuk penggunaan normal. Gunakan See My CV setiap kali melakukan revisi signifikan pada CV Anda untuk memantau peningkatan skor dan memastikan tidak ada masalah baru yang muncul.</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ══ 6. FOOTER ═════════════════════════════════════════ -->
+    <footer class="lp-footer" aria-label="Footer">
+      <div class="lp-wrap">
+        <div class="lp-footer__inner">
+
+          <div class="lp-footer__brand">
+            <div class="lp-footer__brand-name">
+              <div class="lp-footer__brand-icon" aria-hidden="true"></div>
+              See My CV
+            </div>
+            <p>Alat evaluasi CV berbasis AI dengan pendekatan Senior HR Audit. Gratis, tanpa registrasi, dan data Anda tidak pernah disimpan.</p>
+            <div class="lp-footer__privacy">Data CV tidak pernah disimpan</div>
+          </div>
+
+          <div class="lp-footer__col">
+            <h4>Navigasi</h4>
+            <ul class="lp-footer__links">
+              <li><a href="/">Beranda</a></li>
+              <li><a href="/review">Review CV</a></li>
+              <li><a href="/about">Tentang</a></li>
+            </ul>
+          </div>
+
+          <div class="lp-footer__col">
+            <h4>Fitur</h4>
+            <ul class="lp-footer__links">
+              <li><a href="/review">Audit Skor CV</a></li>
+              <li><a href="/review">Analisis Dimensi</a></li>
+              <li><a href="/review">Deteksi Risiko Penolakan</a></li>
+              <li><a href="/review">Contoh Rewrite Kalimat</a></li>
+              <li><a href="/review">Rencana Perbaikan</a></li>
+            </ul>
+          </div>
+
+          <div class="lp-footer__col">
+            <h4>Dukungan</h4>
+            <ul class="lp-footer__links">
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="/about">Cara Kerja</a></li>
+              <li><a href="mailto:support@seemycv.app">support@seemycv.app</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="lp-footer__bottom">
+          <p>© 2026 Gusti I. Mahardhika. Hak cipta dilindungi.</p>
+          <ul class="lp-footer__bottom-links">
+            <li><a href="/about">Kebijakan Privasi</a></li>
+            <li><a href="mailto:support@seemycv.app">Kontak</a></li>
+          </ul>
+        </div>
+      </div>
     </footer>
 
     <script>
       (function () {
-        var btn    = document.getElementById('legal-expand-btn');
-        var box    = document.getElementById('legal-box');
-        var fade   = document.getElementById('legal-fade');
-        var label  = document.getElementById('legal-expand-label');
-        var icon   = document.getElementById('legal-expand-icon');
-        if (!btn || !box) return;
-
-        btn.addEventListener('click', function () {
-          var expanded = btn.getAttribute('aria-expanded') === 'true';
-          if (!expanded) {
-            box.classList.remove('legal-consent-box--collapsed');
-            box.classList.add('legal-consent-box--expanded');
-            fade.style.display = 'none';
-            btn.setAttribute('aria-expanded', 'true');
-            label.textContent = 'Sembunyikan';
-            icon.style.transform = 'rotate(180deg)';
-          } else {
-            box.classList.add('legal-consent-box--collapsed');
-            box.classList.remove('legal-consent-box--expanded');
-            fade.style.display = '';
-            btn.setAttribute('aria-expanded', 'false');
-            label.textContent = 'Baca Selengkapnya';
-            icon.style.transform = '';
-          }
+        document.querySelectorAll('.faq-question').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var item = btn.closest('.faq-item');
+            var isOpen = item.classList.contains('is-open');
+            document.querySelectorAll('.faq-item.is-open').forEach(function (el) {
+              el.classList.remove('is-open');
+              el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) {
+              item.classList.add('is-open');
+              btn.setAttribute('aria-expanded', 'true');
+            }
+          });
         });
       })();
     </script>
-    <script type="module" src="/scripts/main.js"></script>
   </body>
 </html>
