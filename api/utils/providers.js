@@ -23,8 +23,18 @@ function getEnv(name, fallback = "") {
 }
 
 function getProviderConfig() {
+  // Multi-key Gemini setup.
+  // GEMINI_API_KEY_1 → slot 1 (3.1 Pro) + slot 3 (3 Flash)   — Account 1
+  // GEMINI_API_KEY_2 → slot 2 (2.5 Pro) + slot 4 (2.5 Flash) — Account 2
+  // Both fall back to GEMINI_API_KEY for backward compatibility with single-key deployments.
+  const key1 = getEnv("GEMINI_API_KEY_1") || getEnv("GEMINI_API_KEY");
+  const key2 = getEnv("GEMINI_API_KEY_2") || getEnv("GEMINI_API_KEY");
+
   return {
-    gemini:      { apiKey: getEnv("GEMINI_API_KEY"),      model: getEnv("GEMINI_MODEL",      "gemini-2.0-flash") },
+    gemini_31_pro:   { apiKey: key1, model: getEnv("GEMINI_31_PRO_MODEL",   "gemini-3.1-pro-preview") },
+    gemini_25_pro:   { apiKey: key2, model: getEnv("GEMINI_25_PRO_MODEL",   "gemini-2.5-pro") },
+    gemini_3_flash:  { apiKey: key1, model: getEnv("GEMINI_3_FLASH_MODEL",  "gemini-3-flash-preview") },
+    gemini_25_flash: { apiKey: key2, model: getEnv("GEMINI_25_FLASH_MODEL", "gemini-2.5-flash") },
     groq:        { apiKey: getEnv("GROQ_API_KEY"),        model: getEnv("GROQ_MODEL",        "llama-3.3-70b-versatile") },
     mistral:     { apiKey: getEnv("MISTRAL_API_KEY"),     model: getEnv("MISTRAL_MODEL",     "mistral-small-latest") },
     cohere:      { apiKey: getEnv("COHERE_API_KEY"),      model: getEnv("COHERE_MODEL",      "command-r") },
@@ -392,11 +402,16 @@ function buildUserPrompt({ prompt, extractedText, fileMetadata, careerContext, l
 function getProviders() {
   const config = getProviderConfig();
   return [
-    { name: "Google Gemini",           model: config.gemini.model,      enabled: Boolean(config.gemini.apiKey),      call: (input) => callGemini(input, config.gemini) },
-    { name: "Groq",                    model: config.groq.model,        enabled: Boolean(config.groq.apiKey),        call: (input) => callGroq(input, config.groq) },
-    { name: "Mistral AI",              model: config.mistral.model,     enabled: Boolean(config.mistral.apiKey),     call: (input) => callMistral(input, config.mistral) },
-    { name: "Cohere",                  model: config.cohere.model,      enabled: Boolean(config.cohere.apiKey),      call: (input) => callCohere(input, config.cohere) },
-    { name: "Hugging Face Inference",  model: config.huggingface.model, enabled: Boolean(config.huggingface.apiKey), call: (input) => callHuggingFace(input, config.huggingface) },
+    // ── Gemini models — priority order: best reasoning first, Flash as fallback ──
+    { name: "Google Gemini 3.1 Pro",   model: config.gemini_31_pro.model,   enabled: Boolean(config.gemini_31_pro.apiKey),   call: (input) => callGemini(input, config.gemini_31_pro) },
+    { name: "Google Gemini 2.5 Pro",   model: config.gemini_25_pro.model,   enabled: Boolean(config.gemini_25_pro.apiKey),   call: (input) => callGemini(input, config.gemini_25_pro) },
+    { name: "Google Gemini 3 Flash",   model: config.gemini_3_flash.model,  enabled: Boolean(config.gemini_3_flash.apiKey),  call: (input) => callGemini(input, config.gemini_3_flash) },
+    { name: "Google Gemini 2.5 Flash", model: config.gemini_25_flash.model, enabled: Boolean(config.gemini_25_flash.apiKey), call: (input) => callGemini(input, config.gemini_25_flash) },
+    // ── Non-Gemini backups — only triggered when all Gemini quota is exhausted ──
+    { name: "Groq",                    model: config.groq.model,            enabled: Boolean(config.groq.apiKey),            call: (input) => callGroq(input, config.groq) },
+    { name: "Mistral AI",              model: config.mistral.model,         enabled: Boolean(config.mistral.apiKey),         call: (input) => callMistral(input, config.mistral) },
+    { name: "Cohere",                  model: config.cohere.model,          enabled: Boolean(config.cohere.apiKey),          call: (input) => callCohere(input, config.cohere) },
+    { name: "Hugging Face Inference",  model: config.huggingface.model,     enabled: Boolean(config.huggingface.apiKey),     call: (input) => callHuggingFace(input, config.huggingface) },
   ];
 }
 
