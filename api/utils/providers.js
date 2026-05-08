@@ -91,72 +91,50 @@ function detectCVLanguage(text) {
 }
 
 // ── System instruction ────────────────────────────────────────────────────────
-function buildSystemInstruction(language = "id") {
-  const isEn = language === "en";
-
-  const base = isEn
-    ? [
-        "You are a HR Professional and talent acquisition specialist with 15+ years of experience across multiple industries.",
-        "Your task is to deliver a rigorous, honest, and deeply specific CV review — not generic advice.",
-        "Evaluate this CV exactly as an HR Professional would: based on the target role, experience level, industry context, and the provided job description.",
-        "Every feedback item MUST cite specific evidence from the actual CV text — job titles, company names, bullet points, skills listed, or sections present.",
-        "NEVER write feedback that could apply to any CV. If you mention 'lacks quantified results', you MUST name the specific role or bullet point that lacks it.",
-        "NEVER fabricate job titles, companies, achievements, tools, certifications, or numbers not present in the CV.",
-        "If a section is missing entirely, state clearly that it is absent and explain the impact on shortlisting.",
-        "Avoid hollow praise. Every positive observation must reference a specific CV element.",
-        "Do NOT repeat the same issue across different output fields without adding new specifics each time.",
-        "rewriteExamples MUST use actual sentences or phrases extracted directly from the CV — never write fictional before/after pairs.",
-        "Respond ONLY with valid JSON — no markdown, no code fences, no commentary outside the JSON object.",
-      ]
-    : [
-        "Anda adalah HR Professional dan spesialis rekrutmen dengan pengalaman 15+ tahun di berbagai industri.",
-        "Tugas Anda adalah memberikan review CV yang ketat, jujur, dan sangat spesifik — bukan saran generik.",
-        "Nilai CV ini persis seperti HR Professional menilainya: berdasarkan target posisi, level pengalaman, konteks industri, dan job description yang diberikan.",
-        "Setiap poin feedback HARUS menyebut bukti spesifik dari isi CV aktual — jabatan, nama perusahaan, bullet point, skill yang tercantum, atau bagian yang ada/tidak ada.",
-        "JANGAN menulis feedback yang bisa berlaku untuk CV siapapun. Jika Anda menyebut 'tidak ada pencapaian terukur', HARUS sebutkan peran atau bullet point spesifik yang dimaksud.",
-        "JANGAN mengarang jabatan, perusahaan, pencapaian, tools, sertifikasi, atau angka yang tidak ada dalam CV.",
-        "Jika suatu bagian sama sekali tidak ada di CV, nyatakan dengan jelas bahwa bagian itu tidak ditemukan dan jelaskan dampaknya.",
-        "Hindari pujian kosong. Setiap penilaian positif harus merujuk elemen CV yang spesifik.",
-        "JANGAN mengulang masalah yang sama di field output berbeda tanpa menambahkan detail baru.",
-        "rewriteExamples HARUS menggunakan kalimat atau frasa yang benar-benar diambil dari CV — jangan buat pasangan before/after yang fiktif.",
-        "Balas HANYA dengan JSON valid — tanpa markdown, tanpa code fence, tanpa teks apapun di luar objek JSON.",
-      ];
+function buildSystemInstruction() {
+  // Output selalu Bahasa Indonesia — terlepas dari bahasa CV.
+  // Pengecualian bahasa (rewriteExamples untuk CV Inggris) diatur di prompt, bukan di sini.
+  const base = [
+    "Anda adalah HR Professional dan spesialis rekrutmen dengan pengalaman 15+ tahun di berbagai industri.",
+    "Tugas Anda adalah memberikan review CV yang ketat, jujur, dan sangat spesifik — bukan saran generik.",
+    "Nilai CV ini persis seperti HR Professional menilainya: berdasarkan target posisi, level pengalaman, konteks industri, dan job description yang diberikan.",
+    "Setiap poin feedback HARUS menyebut bukti spesifik dari isi CV aktual — jabatan, nama perusahaan, bullet point, skill yang tercantum, atau bagian yang ada/tidak ada.",
+    "JANGAN menulis feedback yang bisa berlaku untuk CV siapapun. Jika Anda menyebut 'tidak ada pencapaian terukur', HARUS sebutkan peran atau bullet point spesifik yang dimaksud.",
+    "JANGAN mengarang jabatan, perusahaan, pencapaian, tools, sertifikasi, atau angka yang tidak ada dalam CV.",
+    "Jika suatu bagian sama sekali tidak ada di CV, nyatakan dengan jelas bahwa bagian itu tidak ditemukan dan jelaskan dampaknya.",
+    "Hindari pujian kosong. Setiap penilaian positif harus merujuk elemen CV yang spesifik.",
+    "JANGAN mengulang masalah yang sama di field output berbeda tanpa menambahkan detail baru.",
+    "rewriteExamples HARUS menggunakan kalimat atau frasa yang benar-benar diambil dari CV — jangan buat pasangan before/after yang fiktif.",
+    "Balas HANYA dengan JSON valid — tanpa markdown, tanpa code fence, tanpa teks apapun di luar objek JSON.",
+  ];
 
   return base.join(" ");
 }
 
 // ── Default review prompt ─────────────────────────────────────────────────────
 function getDefaultReviewPrompt(language = "id") {
-  const isEn = language === "en";
+  const isEnCV = language === "en";
 
-  // ── Language output rule (injected at top of prompt) ─────────────────────
-  const langRule = isEn
-    ? `OUTPUT LANGUAGE: This CV is written in English. Write ALL review content in English — analysis, feedback, summaries, rewrite examples, and recommendations.\n\n`
-    : `OUTPUT LANGUAGE: CV ini ditulis dalam Bahasa Indonesia. Tulis SELURUH konten review dalam Bahasa Indonesia — analisis, feedback, ringkasan, contoh rewrite, dan rekomendasi.\n\n`;
+  // ── Language output rule ──────────────────────────────────────────────────
+  // Seluruh review selalu Bahasa Indonesia.
+  // PENGECUALIAN: rewriteExamples.before & .after tetap dalam bahasa CV asli
+  // jika CV berbahasa Inggris, agar contoh perbaikan kalimat langsung bisa dipakai.
+  const langRule = isEnCV
+    ? `ATURAN BAHASA OUTPUT:
+- Seluruh konten review (summary, verdict, seniorHrFirstImpression, targetRoleFit, dimensionScores, strengths, criticalWeaknesses, fatalMistakes, rejectionRisks, recommendations, priorityFixes, sectionReviews) WAJIB ditulis dalam Bahasa Indonesia.
+- PENGECUALIAN — field rewriteExamples: karena CV ini berbahasa Inggris, field "before" HARUS menggunakan kalimat asli berbahasa Inggris yang diambil dari CV, dan field "after" HARUS ditulis dalam bahasa Inggris agar contoh perbaikan relevan dan langsung dapat digunakan kandidat.\n\n`
+    : `ATURAN BAHASA OUTPUT:
+- Tulis SELURUH konten review dalam Bahasa Indonesia — analisis, feedback, ringkasan, contoh rewrite, dan rekomendasi.\n\n`;
 
   // ── Review mode guidance ──────────────────────────────────────────────────
-  const modeGuide = isEn
-    ? `Review modes:
-- balanced: critical but constructive, highlight both strengths and gaps.
-- senior_hr: firm, direct, and objective — exactly how an HR Professional would annotate a CV.
-- strict: harder, faster to reject; expose every weak point with no softening.
-- rejection_risk: laser-focused on reasons a recruiter would skip this CV.\n\n`
-    : `Mode review:
+  const modeGuide = `Mode review:
 - balanced: kritis tapi konstruktif, soroti kekuatan dan kesenjangan.
 - senior_hr: tegas, langsung, dan objektif — persis seperti HR Professional memberi catatan pada CV.
 - strict: lebih keras, cepat menolak; ungkap setiap titik lemah tanpa melunak.
 - rejection_risk: fokus laser pada alasan recruiter akan melewati CV ini.\n\n`;
 
   // ── Specificity enforcement ───────────────────────────────────────────────
-  const specificityRules = isEn
-    ? `SPECIFICITY RULES (mandatory — violations lower review quality):
-1. Cite the actual role title, company name, or section name when discussing a specific part of the CV.
-2. When the CV DOES contain quantified achievements, acknowledge them by name. When it DOES NOT, cite the specific bullet that would benefit most from quantification.
-3. dimensionScore notes must reference a concrete element from the CV (e.g., "The bullet under [Role] at [Company] reads as task-focused rather than result-focused").
-4. sectionReviews feedback must be grounded in the actual content of that section — mention what IS there, not just what is missing.
-5. rewriteExamples: the "before" field must be an actual sentence or clause taken verbatim (or near-verbatim) from the CV. The "after" field must improve that exact sentence.
-6. Do NOT use placeholder language like "e.g., add metrics" — always show the specific metric or phrasing that fits this candidate's actual context.\n\n`
-    : `ATURAN SPESIFISITAS (wajib — pelanggaran menurunkan kualitas review):
+  const specificityRules = `ATURAN SPESIFISITAS (wajib — pelanggaran menurunkan kualitas review):
 1. Sebutkan nama jabatan, nama perusahaan, atau nama bagian CV yang spesifik saat membahas bagian tertentu.
 2. Jika CV MEMANG memiliki pencapaian terukur, akui secara spesifik. Jika TIDAK, sebutkan bullet point mana yang paling perlu ditambahkan angka/hasil.
 3. Catatan dimensionScore harus merujuk elemen konkret dari CV (mis. "Bullet pada peran [Jabatan] di [Perusahaan] terkesan deskripsi tugas, bukan hasil kerja").
@@ -164,94 +142,35 @@ function getDefaultReviewPrompt(language = "id") {
 5. rewriteExamples: field "before" HARUS berupa kalimat atau klausa yang benar-benar diambil dari CV (verbatim atau hampir verbatim). Field "after" harus memperbaiki kalimat tersebut.
 6. JANGAN gunakan bahasa placeholder seperti "mis. tambahkan metrik" — selalu tunjukkan metrik atau frasa spesifik yang sesuai dengan konteks kandidat ini.\n\n`;
 
-  // ── JSON schema ───────────────────────────────────────────────────────────
-  const schema = isEn
-    ? `Return ONLY valid JSON with exactly this structure:
-{
-  "score": 74,
-  "summary": "2–4 sentences about the overall CV quality, referencing specific strengths and gaps found in this CV.",
-  "verdict": "One clear, direct final verdict — name the biggest blocker or differentiator.",
-  "seniorHrFirstImpression": "What a HR Professional thinks in the first 10 seconds — cite the first visible element (name block, headline, or top experience) that creates this impression.",
-  "targetRoleFit": {
-    "score": 70,
-    "assessment": "Specific assessment of CV–role alignment. Reference the most relevant (or most misaligned) experience or skill found in the CV."
-  },
-  "dimensionScores": [
-    { "name": "Role Alignment",        "score": 70, "note": "Cite specific role/skill evidence." },
-    { "name": "Experience Impact",     "score": 65, "note": "Cite a specific bullet or role that illustrates the issue." },
-    { "name": "Achievement Clarity",   "score": 60, "note": "Reference a specific bullet that lacks or demonstrates quantified results." },
-    { "name": "Skills Relevance",      "score": 75, "note": "Name specific skills listed and their relevance to the target role." },
-    { "name": "ATS Keyword Readiness", "score": 68, "note": "Mention specific missing or present keywords relative to the job description." },
-    { "name": "Structure & Readability","score": 72, "note": "Comment on section order, bullet style, or length based on what is in this CV." },
-    { "name": "Profile / Summary",     "score": 65, "note": "Evaluate the actual summary/objective text if present; note its absence if missing." },
-    { "name": "Completeness",          "score": 70, "note": "Name any critical sections that are absent or thin in this CV." }
-  ],
-  "strengths": [
-    "Strength 1 — must reference a specific section, role, skill, or phrase from the CV.",
-    "Strength 2 — same rule.",
-    "Strength 3 — same rule."
-  ],
-  "criticalWeaknesses": [
-    "Weakness 1 — cite the specific element that is weak.",
-    "Weakness 2 — cite the specific element that is weak.",
-    "Weakness 3 — cite the specific element that is weak."
-  ],
-  "fatalMistakes": [
-    "Fatal issue 1 — must be backed by something actually in (or missing from) this CV.",
-    "Fatal issue 2 — same rule."
-  ],
-  "rejectionRisks": [
-    "Risk 1 — what specific signal will make a recruiter skip this CV.",
-    "Risk 2 — same rule.",
-    "Risk 3 — same rule."
-  ],
-  "recommendations": [
-    "Actionable recommendation 1 — specific to this CV's actual content.",
-    "Actionable recommendation 2.",
-    "Actionable recommendation 3.",
-    "Actionable recommendation 4."
-  ],
-  "priorityFixes": [
-    {
-      "priority": 1,
-      "issue": "Name the exact problem — reference the CV section or bullet.",
-      "action": "Precise corrective action — show what to write or change, not just what category to improve.",
-      "impact": "Very High"
-    },
-    {
-      "priority": 2,
-      "issue": "Second most important problem.",
-      "action": "Precise corrective action.",
-      "impact": "High"
-    },
-    {
-      "priority": 3,
-      "issue": "Third most important problem.",
-      "action": "Precise corrective action.",
-      "impact": "High"
-    }
-  ],
-  "sectionReviews": [
-    { "title": "Profile / Summary",    "score": 65, "feedback": "Evaluate actual summary content — quote a phrase if possible." },
-    { "title": "Work Experience",      "score": 70, "feedback": "Comment on the most recent role's bullet quality and relevance." },
-    { "title": "Skills",               "score": 72, "feedback": "Name specific skills listed and assess their match with the target role." },
-    { "title": "Education",            "score": 75, "feedback": "Note degree, institution, and any missing expected credentials for the target role." },
-    { "title": "Format & ATS",         "score": 68, "feedback": "Comment on layout, file type, readability, and ATS-parse risk based on this CV." }
-  ],
-  "rewriteExamples": [
+  // ── rewriteExamples schema — language-aware ───────────────────────────────
+  const rewriteSchema = isEnCV
+    ? `  "rewriteExamples": [
     {
       "section": "Work Experience",
-      "before": "ACTUAL sentence or bullet from the CV — verbatim or very close.",
-      "after": "Improved version of that exact sentence — stronger, more result-oriented, ATS-friendly."
+      "before": "ACTUAL sentence or bullet from the CV — verbatim or very close. Tulis dalam bahasa Inggris sesuai CV.",
+      "after": "Improved version of that exact sentence — stronger, more result-oriented, ATS-friendly. Tulis dalam bahasa Inggris."
     },
     {
       "section": "Profile / Summary",
-      "before": "ACTUAL opening phrase or summary sentence from the CV.",
-      "after": "Rewritten version that is sharper, role-specific, and keyword-rich."
+      "before": "ACTUAL opening phrase or summary sentence from the CV. Tulis dalam bahasa Inggris sesuai CV.",
+      "after": "Rewritten version that is sharper, role-specific, and keyword-rich. Tulis dalam bahasa Inggris."
     }
-  ]
-}`
-    : `Kembalikan HANYA JSON valid dengan struktur tepat seperti ini:
+  ]`
+    : `  "rewriteExamples": [
+    {
+      "section": "Pengalaman Kerja",
+      "before": "Kalimat atau bullet AKTUAL dari CV — verbatim atau sangat dekat.",
+      "after": "Versi perbaikan dari kalimat tersebut — lebih kuat, berorientasi hasil, ramah ATS."
+    },
+    {
+      "section": "Profil / Ringkasan",
+      "before": "Frasa pembuka atau kalimat summary AKTUAL dari CV.",
+      "after": "Versi yang ditulis ulang — lebih tajam, spesifik terhadap peran, dan kaya keyword."
+    }
+  ]`;
+
+  // ── JSON schema (selalu Bahasa Indonesia) ─────────────────────────────────
+  const schema = `Kembalikan HANYA JSON valid dengan struktur tepat seperti ini:
 {
   "score": 74,
   "summary": "2–4 kalimat tentang kualitas CV secara keseluruhan, merujuk kekuatan dan kesenjangan spesifik yang ditemukan di CV ini.",
@@ -323,36 +242,11 @@ function getDefaultReviewPrompt(language = "id") {
     { "title": "Pendidikan",            "score": 75, "feedback": "Catat gelar, institusi, dan kredensial yang diharapkan untuk target posisi." },
     { "title": "Format & ATS",          "score": 68, "feedback": "Komentari tata letak, keterbacaan, dan risiko parse ATS berdasarkan CV ini." }
   ],
-  "rewriteExamples": [
-    {
-      "section": "Pengalaman Kerja",
-      "before": "Kalimat atau bullet AKTUAL dari CV — verbatim atau sangat dekat.",
-      "after": "Versi perbaikan dari kalimat tersebut — lebih kuat, berorientasi hasil, ramah ATS."
-    },
-    {
-      "section": "Profil / Ringkasan",
-      "before": "Frasa pembuka atau kalimat summary AKTUAL dari CV.",
-      "after": "Versi yang ditulis ulang — lebih tajam, spesifik terhadap peran, dan kaya keyword."
-    }
-  ]
+${rewriteSchema}
 }`;
 
-  // ── Closing rules ─────────────────────────────────────────────────────────
-  const closingRules = isEn
-    ? `\n\nFINAL RULES:
-- score values must be integers 0–100. Reflect real quality differences — avoid clustering all scores at 60–70.
-- dimensionScores: exactly 8 items.
-- strengths: 3–6 items. Each must be specific to this CV.
-- criticalWeaknesses: 3–6 items. Each must cite a specific CV element.
-- fatalMistakes: 2–5 items. If no truly fatal mistakes, name the highest-risk issues with full specifics.
-- rejectionRisks: 3–6 items.
-- recommendations: 4–8 items. Each must be actionable for THIS candidate, not generic advice.
-- priorityFixes: 3–6 items sorted by impact descending.
-- sectionReviews: 4–7 items covering sections actually present in the CV.
-- rewriteExamples: 2–5 items. ONLY use actual CV text in "before". Never fabricate.
-- Do NOT identify yourself as an AI.
-- If the target role clearly does not match the CV content, state this explicitly with supporting evidence.`
-    : `\n\nATURAN AKHIR:
+  // ── Closing rules (selalu Bahasa Indonesia) ───────────────────────────────
+  const closingRules = `\n\nATURAN AKHIR:
 - Nilai score harus integer 0–100. Cerminkan perbedaan kualitas nyata — hindari mengelompokkan semua skor di 60–70.
 - dimensionScores: tepat 8 item.
 - strengths: 3–6 item. Masing-masing harus spesifik untuk CV ini.
@@ -372,28 +266,23 @@ function getDefaultReviewPrompt(language = "id") {
 // ── User prompt builder ───────────────────────────────────────────────────────
 function buildUserPrompt({ prompt, extractedText, fileMetadata, careerContext, language }) {
   const lang = language || "id";
-  const isEn = lang === "en";
 
-  const langNote = isEn
-    ? `Detected CV language: English. Write all review output in English.`
+  const langNote = lang === "en"
+    ? `Bahasa CV yang terdeteksi: Inggris. Seluruh review dalam Bahasa Indonesia, KECUALI field rewriteExamples.before dan rewriteExamples.after yang WAJIB dalam bahasa Inggris.`
     : `Bahasa CV yang terdeteksi: Indonesia. Tulis seluruh output review dalam Bahasa Indonesia.`;
-
-  const contextLabel     = isEn ? "Career context"  : "Konteks target karier";
-  const metaLabel        = isEn ? "File metadata"   : "Metadata file";
-  const cvLabel          = isEn ? "Extracted CV text" : "Teks CV yang diekstrak";
 
   return [
     prompt || getDefaultReviewPrompt(lang),
     "",
     `[${langNote}]`,
     "",
-    `${contextLabel}:`,
+    `Konteks target karier:`,
     JSON.stringify(careerContext || {}, null, 2),
     "",
-    `${metaLabel}:`,
+    `Metadata file:`,
     JSON.stringify(fileMetadata || {}, null, 2),
     "",
-    `${cvLabel}:`,
+    `Teks CV yang diekstrak:`,
     extractedText,
   ].join("\n");
 }
