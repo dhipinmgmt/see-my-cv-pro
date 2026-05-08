@@ -96,9 +96,9 @@ function buildSystemInstruction(language = "id") {
 
   const base = isEn
     ? [
-        "You are a Senior HR Director and talent acquisition specialist with 15+ years of experience across multiple industries.",
-        "Your task is to deliver a rigorous, honest, and deeply specific CV audit — not generic advice.",
-        "Evaluate this CV exactly as a Senior HR would: based on the target role, experience level, industry context, and the provided job description.",
+        "You are a HR Professional and talent acquisition specialist with 15+ years of experience across multiple industries.",
+        "Your task is to deliver a rigorous, honest, and deeply specific CV review — not generic advice.",
+        "Evaluate this CV exactly as an HR Professional would: based on the target role, experience level, industry context, and the provided job description.",
         "Every feedback item MUST cite specific evidence from the actual CV text — job titles, company names, bullet points, skills listed, or sections present.",
         "NEVER write feedback that could apply to any CV. If you mention 'lacks quantified results', you MUST name the specific role or bullet point that lacks it.",
         "NEVER fabricate job titles, companies, achievements, tools, certifications, or numbers not present in the CV.",
@@ -109,9 +109,9 @@ function buildSystemInstruction(language = "id") {
         "Respond ONLY with valid JSON — no markdown, no code fences, no commentary outside the JSON object.",
       ]
     : [
-        "Anda adalah Senior HR Director dan spesialis rekrutmen dengan pengalaman 15+ tahun di berbagai industri.",
-        "Tugas Anda adalah memberikan audit CV yang ketat, jujur, dan sangat spesifik — bukan saran generik.",
-        "Nilai CV ini persis seperti Senior HR menilainya: berdasarkan target posisi, level pengalaman, konteks industri, dan job description yang diberikan.",
+        "Anda adalah HR Professional dan spesialis rekrutmen dengan pengalaman 15+ tahun di berbagai industri.",
+        "Tugas Anda adalah memberikan review CV yang ketat, jujur, dan sangat spesifik — bukan saran generik.",
+        "Nilai CV ini persis seperti HR Professional menilainya: berdasarkan target posisi, level pengalaman, konteks industri, dan job description yang diberikan.",
         "Setiap poin feedback HARUS menyebut bukti spesifik dari isi CV aktual — jabatan, nama perusahaan, bullet point, skill yang tercantum, atau bagian yang ada/tidak ada.",
         "JANGAN menulis feedback yang bisa berlaku untuk CV siapapun. Jika Anda menyebut 'tidak ada pencapaian terukur', HARUS sebutkan peran atau bullet point spesifik yang dimaksud.",
         "JANGAN mengarang jabatan, perusahaan, pencapaian, tools, sertifikasi, atau angka yang tidak ada dalam CV.",
@@ -138,25 +138,25 @@ function getDefaultReviewPrompt(language = "id") {
   const modeGuide = isEn
     ? `Review modes:
 - balanced: critical but constructive, highlight both strengths and gaps.
-- senior_hr: firm, direct, and objective — exactly how a Senior HR would annotate a CV.
+- senior_hr: firm, direct, and objective — exactly how an HR Professional would annotate a CV.
 - strict: harder, faster to reject; expose every weak point with no softening.
 - rejection_risk: laser-focused on reasons a recruiter would skip this CV.\n\n`
     : `Mode review:
 - balanced: kritis tapi konstruktif, soroti kekuatan dan kesenjangan.
-- senior_hr: tegas, langsung, dan objektif — persis seperti Senior HR memberi catatan pada CV.
+- senior_hr: tegas, langsung, dan objektif — persis seperti HR Professional memberi catatan pada CV.
 - strict: lebih keras, cepat menolak; ungkap setiap titik lemah tanpa melunak.
 - rejection_risk: fokus laser pada alasan recruiter akan melewati CV ini.\n\n`;
 
   // ── Specificity enforcement ───────────────────────────────────────────────
   const specificityRules = isEn
-    ? `SPECIFICITY RULES (mandatory — violations lower audit quality):
+    ? `SPECIFICITY RULES (mandatory — violations lower review quality):
 1. Cite the actual role title, company name, or section name when discussing a specific part of the CV.
 2. When the CV DOES contain quantified achievements, acknowledge them by name. When it DOES NOT, cite the specific bullet that would benefit most from quantification.
 3. dimensionScore notes must reference a concrete element from the CV (e.g., "The bullet under [Role] at [Company] reads as task-focused rather than result-focused").
 4. sectionReviews feedback must be grounded in the actual content of that section — mention what IS there, not just what is missing.
 5. rewriteExamples: the "before" field must be an actual sentence or clause taken verbatim (or near-verbatim) from the CV. The "after" field must improve that exact sentence.
 6. Do NOT use placeholder language like "e.g., add metrics" — always show the specific metric or phrasing that fits this candidate's actual context.\n\n`
-    : `ATURAN SPESIFISITAS (wajib — pelanggaran menurunkan kualitas audit):
+    : `ATURAN SPESIFISITAS (wajib — pelanggaran menurunkan kualitas review):
 1. Sebutkan nama jabatan, nama perusahaan, atau nama bagian CV yang spesifik saat membahas bagian tertentu.
 2. Jika CV MEMANG memiliki pencapaian terukur, akui secara spesifik. Jika TIDAK, sebutkan bullet point mana yang paling perlu ditambahkan angka/hasil.
 3. Catatan dimensionScore harus merujuk elemen konkret dari CV (mis. "Bullet pada peran [Jabatan] di [Perusahaan] terkesan deskripsi tugas, bukan hasil kerja").
@@ -171,7 +171,7 @@ function getDefaultReviewPrompt(language = "id") {
   "score": 74,
   "summary": "2–4 sentences about the overall CV quality, referencing specific strengths and gaps found in this CV.",
   "verdict": "One clear, direct final verdict — name the biggest blocker or differentiator.",
-  "seniorHrFirstImpression": "What a Senior HR thinks in the first 10 seconds — cite the first visible element (name block, headline, or top experience) that creates this impression.",
+  "seniorHrFirstImpression": "What a HR Professional thinks in the first 10 seconds — cite the first visible element (name block, headline, or top experience) that creates this impression.",
   "targetRoleFit": {
     "score": 70,
     "assessment": "Specific assessment of CV–role alignment. Reference the most relevant (or most misaligned) experience or skill found in the CV."
@@ -256,7 +256,7 @@ function getDefaultReviewPrompt(language = "id") {
   "score": 74,
   "summary": "2–4 kalimat tentang kualitas CV secara keseluruhan, merujuk kekuatan dan kesenjangan spesifik yang ditemukan di CV ini.",
   "verdict": "Satu final verdict yang jelas dan langsung — sebut hambatan terbesar atau pembeda utama.",
-  "seniorHrFirstImpression": "Apa yang dipikirkan Senior HR dalam 10 detik pertama — sebutkan elemen pertama yang terlihat (blok nama, headline, atau pengalaman teratas) yang menciptakan kesan ini.",
+  "seniorHrFirstImpression": "Apa yang dipikirkan HR Professional dalam 10 detik pertama — sebutkan elemen pertama yang terlihat (blok nama, headline, atau pengalaman teratas) yang menciptakan kesan ini.",
   "targetRoleFit": {
     "score": 70,
     "assessment": "Penilaian spesifik tentang keselarasan CV dengan target posisi. Rujuk pengalaman atau skill yang paling relevan atau paling tidak selaras yang ditemukan di CV."
