@@ -59,9 +59,19 @@ function getAllowedOrigins() {
 
 function isOriginAllowed(req) {
   const allowedOrigins = getAllowedOrigins();
-  if (!allowedOrigins.length) return true;
   const origin = getHeader(req.headers, "origin");
+
+  // Fail-closed: jika ALLOWED_ORIGINS belum dikonfigurasi, tolak semua request
+  // kecuali dalam mode development lokal.
+  if (!allowedOrigins.length) {
+    return process.env.NODE_ENV === "development";
+  }
+
+  // Request tanpa Origin header (non-browser: curl, Postman, server-to-server).
+  // CORS adalah mekanisme browser-only — non-browser request tidak bisa diblokir
+  // lewat CORS. Perlindungan terhadap abuse non-browser ditangani oleh rate limiter.
   if (!origin) return true;
+
   return allowedOrigins.includes(origin);
 }
 
@@ -178,15 +188,42 @@ function getClientIdentifier(req) {
   return ip.replace(/[^a-zA-Z0-9:._-]/g, "").slice(0, 80) || "anonymous";
 }
 
+// ── In-memory fallback rate limiter ─────────────────────────────────────────
+// Aktif saat Upstash tidak dikonfigurasi. Karena Vercel functions bisa berjalan
+// di banyak instance paralel, limit ini berlaku per-instance — tidak global.
+// Tetap jauh lebih baik dari tanpa rate limit sama sekali.
+const _memStore = new Map();
+
+function checkMemoryRateLimit(clientId) {
+  const limit     = Number(process.env.RATE_LIMIT_PER_MINUTE     || DEFAULT_RATE_LIMIT);
+  const windowMs  = Number(process.env.RATE_LIMIT_WINDOW_SECONDS || DEFAULT_RATE_LIMIT_WINDOW_SECONDS) * 1000;
+  const windowKey = Math.floor(Date.now() / windowMs);
+  const storeKey  = `${clientId}:${windowKey}`;
+
+  const count = (_memStore.get(storeKey) || 0) + 1;
+  _memStore.set(storeKey, count);
+
+  // Hygiene: hapus entry dari window sebelumnya agar memori tidak bocor
+  if (_memStore.size > 5_000) {
+    for (const k of _memStore.keys()) {
+      if (!k.endsWith(`:${windowKey}`)) _memStore.delete(k);
+    }
+  }
+
+  return { limited: count > limit, remaining: Math.max(0, limit - count), limit };
+}
+
 async function checkRateLimit(req) {
   const restUrl = process.env.UPSTASH_REDIS_REST_URL;
   const token   = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const clientId = getClientIdentifier(req);
 
-  if (!restUrl || !token) return { limited: false, remaining: null, limit: null };
+  // Gunakan Redis jika dikonfigurasi, fallback ke in-memory
+  if (!restUrl || !token) return checkMemoryRateLimit(clientId);
 
   const limit         = Number(process.env.RATE_LIMIT_PER_MINUTE        || DEFAULT_RATE_LIMIT);
   const windowSeconds = Number(process.env.RATE_LIMIT_WINDOW_SECONDS    || DEFAULT_RATE_LIMIT_WINDOW_SECONDS);
-  const key           = `see-my-cv:rate:${getClientIdentifier(req)}`;
+  const key           = `see-my-cv:rate:${clientId}`;
 
   const incrementResponse = await upstashCommand(restUrl, token, ["INCR", key]);
   const count = Number(incrementResponse?.result || 0);
