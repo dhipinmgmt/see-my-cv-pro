@@ -120,12 +120,16 @@
         </p>
         <ul>
           <li>
-            Data dapat diproses melalui penyedia infrastruktur aplikasi, yaitu Netlify,
+            Data dapat diproses melalui penyedia infrastruktur aplikasi, yaitu <strong>Vercel</strong>,
             semata-mata untuk menjalankan layanan web dan fungsi serverless.
           </li>
           <li>
-            Data dapat diteruskan ke layanan AI pihak ketiga yang digunakan oleh See My CV
-            semata-mata untuk menghasilkan ulasan CV secara otomatis.
+            Teks CV yang diekstrak akan diteruskan ke layanan AI pihak ketiga yang berperan sebagai
+            <em>prosesor data</em> untuk menghasilkan ulasan CV secara otomatis. Layanan AI yang
+            digunakan mencakup <strong>Google Gemini</strong> (Google LLC), <strong>Groq</strong>
+            (Groq, Inc.), <strong>Mistral AI</strong> (Mistral AI SAS), dan provider cadangan
+            lainnya. Berdasarkan ketentuan layanan masing-masing provider tersebut, data yang
+            dikirim melalui API tidak digunakan untuk melatih model AI mereka.
           </li>
           <li>
             Pemrosesan dilakukan secara langsung, real-time, dan sementara selama aktivitas
